@@ -1,38 +1,53 @@
+const baseUrl = "http://localhost/GestionCabinetMedicalBack_end/controllers/controllerMedecin";
 
-document.addEventListener('DOMContentLoaded', function() {
-    var form = document.getElementById('formMedecin');
+// CREER UN MEDECIN 
+function createMedecin(event) {
+    event.preventDefault();
 
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
+    var civilite = document.querySelector('input[name="civilite"]:checked').value;
+    var nom = document.getElementById('nom').value;
+    var prenom = document.getElementById('prenom').value;
 
-        // Récupère les valeurs du formulaire
-        var civilite = document.querySelector('input[name="civilite"]:checked').value;
-        var nom = document.getElementById('nom').value;
-        var prenom = document.getElementById('prenom').value;
+    var data = {
+        civilite: civilite,
+        nom: nom,
+        prenom: prenom
+    };
 
-        // Crée l'objet JSON à envoyer
-        var data = {
-            civilite: civilite,
-            nom: nom,
-            prenom: prenom
-        };
-
-        // Utilise Fetch pour envoyer les données en JSON
-        fetch(form.action, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-        .then(response => response.json()) // ou .then(response => response.text()) si la réponse n'est pas du JSON
-        .then(data => {
-            console.log('Succès:', data);
-            // Traitez ici la réponse du serveur
-        })
-        .catch((error) => {
-            console.error('Erreur:', error);
-            // Gérez ici les erreurs de requête
-        });
+    fetch(baseUrl + "/ControllerAddMedecin.php", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(data => {
+        if (data.status === 200) {
+            alert("Médecin ajouté avec succès!");
+        } else {
+            alert("Une erreur s'est produite lors de l'ajout du médecin.",data.status);
+        }
+    })
+    .catch(error => {
+        alert("Une erreur s'est produite lors de l'envoi de la requête.", error);
     });
-});
+}
+// DELETE MEDECIN
+function deleteMedecin(){
+    var nom = document.getElementById("nom").value;
+    var prenom = document.getElementById("prenom").value;
+
+    var data = {
+        nom: nom,
+        prenom: prenom
+    }
+    fetch (baseUrl + "/ControllerDeleteMedecin",{
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+}
+document.getElementById('formMedecin').addEventListener('submit', createMedecin);
+
