@@ -1,0 +1,126 @@
+/* ESPECE REGISTRE */
+
+.register {
+    width: 50%;
+    margin: 0 auto;
+}
+
+.register form {
+    background-color: #f8f8f8;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.register label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.register input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.register input[type="submit"] {
+    background-color: #3498db;
+    color: #fff;
+    cursor: pointer;
+}
+
+.register input[type="submit"]:hover {
+    background-color: #2980b9;
+}
+
+/* ESPACE AFFICHAGE */
+
+header{
+    text-align: center;
+}
+.allRdv {
+    text-align: left;
+    border: 2px solid #3498db;
+    border-radius: 8px;
+    background-color: #f8f8f8;
+    padding: 15px;
+    margin: 15px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: inline-block;
+}
+.allRdv form {
+    margin-top: 15px;
+}
+
+.allRdv input {
+    margin-bottom: 10px;
+    padding: 8px;
+    width: calc(100% - 16px); 
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.allRdv input[type="submit"] {
+    background-color: #3498db;
+    color: #fff;
+    cursor: pointer;
+}
+
+.allRdv input[type="submit"]:hover {
+    background-color: #2980b9;
+}
+.form_recherche{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+}
+.form_recherche select{
+    padding: 10px;
+    border: 1px solid #3498db;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.form_recherche input[type="submit"] {
+    background-color: #3498db;
+    margin:5px ;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.form_recherche input[type="submit"]:hover {
+    background-color: #2980b9;
+}
+#confirmationMessage {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    display: block;
+    z-index: 1000;
+}
+#confirmationMessageAjoutRdv{
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    display: block;
+    z-index: 1000;
+    margin-bottom: 20px;
+}
+#FailMessageAjoutrdv{
+    background-color: red;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    display: block;
+    z-index: 1000;
+    margin-bottom: 20px;
+}
