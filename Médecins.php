@@ -31,10 +31,10 @@
               </script>';
     }
     ?>
+
 </head>
 
-<header >
-
+<header>
     <div class="navBar">
         <ul>
             <li><a href="index.html" class="navElement">Accueil</a></li>
@@ -44,7 +44,6 @@
             <li><a href="Statistiques.php" class="navElement">Statistiques</a></li>
         </ul>
     </div>
-
 </header>
 
 <body>
@@ -64,22 +63,91 @@
             echo '<div id="confirmationMessage">Médecin bien supprimé</div>';
         }
         ?>
-        <div class="global_gestion_medecins">
-            <div class="ajout_usagers">
-                <form action="../back_end/Medecin/AddMedecin.php" method="post">
-                    <h2>Ajouter un medecin</h2>
-                    <label for="civilite"><input type="radio" name="civilite"  value="homme" required>homme</label>
-                    <label for="civilite"><input type="radio" name="civilite"  value="femme" required>femme</label>
-                    
-                    <label for ="Nom">Nom</label>
-                    <input for="nom" type="text" name="nom" id="nom" required>
-                    
-                    <label for="prenom">Prenom</label>
-                    <input for="prenom" type="text" class="bas" name="prenom" id="prenom" required>
 
-                    <input type="submit" value="Ajouter">
-                </form>
-            </div>
+
+
+
+
+        <?php
+        $url = "http://localhost/GestionCabinetMedicalBack_end/control/";
+
+        echo '<div class="global_gestion_medecins">
+                <div class="ajout_usagers">
+                    <form action="' . $url . 'Medecin/AddMedecin.php" method="post" id="formMedecin">
+                        <h2>Ajouter un medecin</h2>
+                        <label for="civilite"><input type="radio" name="civilite" value="homme" required>homme</label>
+                        <label for="civilite"><input type="radio" name="civilite" value="femme" required>femme</label>
+                        
+                        <label for="nom">Nom</label>
+                        <input type="text" name="nom" id="nom" required>
+                        
+                        <label for="prenom">Prenom</label>
+                        <input type="text" class="bas" name="prenom" id="prenom" required>
+
+                        <input type="submit" value="Ajouter">
+                    </form>
+                </div>
+            </div>';
+        ?>
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var form = document.getElementById('formMedecin');
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Récupère les valeurs du formulaire
+                var civilite = document.querySelector('input[name="civilite"]:checked').value;
+                var nom = document.getElementById('nom').value;
+                var prenom = document.getElementById('prenom').value;
+
+                // Crée l'objet JSON à envoyer
+                var data = {
+                    civilite: civilite,
+                    nom: nom,
+                    prenom: prenom
+                };
+
+                // Utilise Fetch pour envoyer les données en JSON
+                fetch(form.action, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                })
+                .then(response => response.json()) // ou .then(response => response.text()) si la réponse n'est pas du JSON
+                .then(data => {
+                    console.log('Succès:', data);
+                    // Traitez ici la réponse du serveur
+                })
+                .catch((error) => {
+                    console.error('Erreur:', error);
+                    // Gérez ici les erreurs de requête
+                });
+            });
+        });
+        </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
             <div class="modifications_usagers">
                 <form action="../back_end/Medecin/SearchMedecin.php" method="post">
                     <input type="hidden" name="context" value="Modify">
