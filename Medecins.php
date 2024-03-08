@@ -58,9 +58,12 @@
                         <input type="submit" value="Modifier">
                     </form>
                 </div>  
-
+                <div class="form-group">
+                    <button id="getAllPhrases">Afficher toutes les medecin</button>
+                    <div class="info-response" id="infoGetAllPhrases"></div>
+                </div>
                 <!-- SUPPRIMER UN MEDECIN -->
-                <div class="suppresion_usagers">
+                <!-- <div class="suppresion_usagers">
                     <form action="" method="post" id="formMedecinDelete">
                         <input type="hidden" name="context" value="Delete">
                         <h2>Supprimer un médecin</h2>
@@ -73,7 +76,22 @@
 
                         <input type="submit" value="Supprimer">
                     </form>
-                </div>
+                </div> -->
+                <form action="" method="post" class="form_recherche">
+                <?php
+                    //require_once("../back_end/Objects/Usager.php");
+
+                    //$usager = new Usager();
+                    //$printAllMedecin = $usager->PrintAllMedecin();
+
+                    echo '<select name="allMedecin" id="AllMedecin">';
+                    echo '<option value="" selected disabled>Sélectionnez un médecin</option>'; // Option par défaut
+                    //echo $printAllMedecin;
+                    echo '</select>';
+                    
+                ?>
+                <input type="submit" name="Supprimer"value="Supprimer">
+            </form>
             </div>
         </div>
         <script src="Medecins.js"></script>

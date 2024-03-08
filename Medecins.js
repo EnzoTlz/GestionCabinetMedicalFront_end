@@ -41,13 +41,36 @@ function deleteMedecin(){
         nom: nom,
         prenom: prenom
     }
-    fetch (baseUrl + "/ControllerDeleteMedecin",{
+    fetch (baseUrl + "/ControllerDeleteMedecin.php",{
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data)
     })
+    .then(data => {
+        if (data.status === 200) {
+            alert("Médecin supprimer avec succès!");
+        } else {
+            alert("Une erreur s'est produite lors de la suppression du médecin.",data.status);
+        }
+    })
+    .catch(error => {
+        alert("Une erreur s'est produite lors de l'envoi de la requête.", error);
+    });
 }
-document.getElementById('formMedecin').addEventListener('submit', createMedecin);
 
+function getAllMedecin() {
+    fetch(baseUrl + "/controllerGetAllMedecin.php")
+    .then(data => {
+        console.log(data.data);
+    })
+    .catch(error => {
+        alert("Une erreur s'est produite lors de la récupération des médecins.", error);
+    });
+}
+getAllPhrases
+document.getElementById('getAllPhrases').addEventListener('click', getAllMedecin);
+//document.querySelector('AllMedecin').addEventListener('change', getAllMedecin);
+document.getElementById('formMedecinAdd').addEventListener('submit', createMedecin);
+//document.getElementById('formMedecinDelete').addEventListener('submit', deleteMedecin);
