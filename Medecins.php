@@ -32,8 +32,8 @@
                 <div class="ajout_usagers">
                     <form action="" method="post" id="formMedecinAdd">
                         <h2>Ajouter un medecin</h2>
-                        <label for="civilite"><input type="radio" name="civilite" value="homme" required>homme</label>
-                        <label for="civilite"><input type="radio" name="civilite" value="femme" required>femme</label>  
+                        <label for="civilite"><input type="radio" name="civilite" value="M." required>homme</label>
+                        <label for="civilite"><input type="radio" name="civilite" value="Mme." required>femme</label>  
                         <label for="nom">Nom</label>
                         <input type="text" name="nom" id="nom" required> 
                         <label for="prenom">Prenom</label>
@@ -42,58 +42,31 @@
                     </form>
                 </div>
                 
-
                 <!-- MODIFICATION D'UN MEDECIN  -->
                 <div class="modifications_usagers">
-                    <form action="../back_end/Medecin/SearchMedecin.php" method="post">
+                    <form action="" method="post" id="formMedecinSearch">
                         <input type="hidden" name="context" value="Modify">
                         <h2>Modifier un médecin</h2>
-
-                        <label for="nom">Nom</label>
-                        <input type="text" name="nom" id="nom" required>
-
-                        <label for="prenom">Prenom</label>
-                        <input type="text" class="bas" name="prenom" id="prenom" required>
-
+                        <select name="allMedecin" id="AllMedecin">
+                            <option value="" selected disabled>Sélectionnez un médecin</option>
+                        </select>
                         <input type="submit" value="Modifier">
                     </form>
                 </div>  
-                <div class="form-group">
-                    <button id="getAllPhrases">Afficher toutes les medecin</button>
-                    <div class="info-response" id="infoGetAllPhrases"></div>
-                </div>
-                <!-- SUPPRIMER UN MEDECIN -->
+
+                <!-- SUPPRESSION D'UN MEDECIN -->
                 <!-- <div class="suppresion_usagers">
-                    <form action="" method="post" id="formMedecinDelete">
-                        <input type="hidden" name="context" value="Delete">
+                    <form action="" method="post" class="formMedecinDelete">
                         <h2>Supprimer un médecin</h2>
-
-                        <label for="nom">Nom</label>
-                        <input type="text" name="nom" id="nom" >
-
-                        <label for="prenom">Prenom</label>
-                        <input type="text" name="prenom" class="bas"id="prenom" >
-
-                        <input type="submit" value="Supprimer">
+                        <select name="allMedecin" id="AllMedecin">
+                            <option value="" selected disabled>Sélectionnez un médecin</option>
+                        </select>
+                        <input type="submit" name="Supprimer" value="Supprimer">
                     </form>
                 </div> -->
-                <form action="" method="post" class="form_recherche">
-                <?php
-                    //require_once("../back_end/Objects/Usager.php");
-
-                    //$usager = new Usager();
-                    //$printAllMedecin = $usager->PrintAllMedecin();
-
-                    echo '<select name="allMedecin" id="AllMedecin">';
-                    echo '<option value="" selected disabled>Sélectionnez un médecin</option>'; // Option par défaut
-                    //echo $printAllMedecin;
-                    echo '</select>';
-                    
-                ?>
-                <input type="submit" name="Supprimer"value="Supprimer">
-            </form>
             </div>
         </div>
+
         <script src="Medecins.js"></script>
     </body>
 </html>
