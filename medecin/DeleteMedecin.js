@@ -1,13 +1,15 @@
+const baseUrl = "https://gestionmedical.alwaysdata.net/api/controllers/controllerMedecin";
 //DELETE MEDECIN
-function deleteMedecin(){
-    var nom = document.getElementById("nom").value;
-    var prenom = document.getElementById("prenom").value;
 
+function deleteMedecin(event){
+    event.preventDefault();
     var data = {
-        nom: nom,
-        prenom: prenom
+        id: document.getElementById("Id_Medecin").value,
+        nom: document.getElementById("nom").value,
+        prenom: document.getElementById("prenom").value,
+        civilite: document.getElementById("civilite").value
     }
-    fetch (baseUrl + "/ControllerDeleteMedecin.php",{
+    fetch (baseUrl + "/ControllerDeleteMedecin.php" + "?id=" + data.id,{
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
@@ -17,6 +19,7 @@ function deleteMedecin(){
     .then(data => {
         if (data.status === 200) {
             alert("Médecin supprimer avec succès!");
+            document.location.href="../Medecins.php";
         } else {
             alert("Une erreur s'est produite lors de la suppression du médecin.",data.status);
         }

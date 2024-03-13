@@ -77,7 +77,7 @@ function getAllMedecin() {
 }
 
 // GET UN MEDECIN
-function getMedecinById(id){
+function getMedecinById(id , value){
     fetch(baseUrl + "/ControllerGetMedecin.php" + "?id="+id )
     .then(response => {
         if (!response.ok) {
@@ -91,10 +91,13 @@ function getMedecinById(id){
             status_code: data.status_code,
             status_message: data.status_message
         };
-        if(infoReponse.status_code == 200){
+        if(infoReponse.status_code == 200  && value == "modify"){
             document.location.href="./medecin/ModifyMedecin.php?Id_Medecin=" + data.data.Id_Medecin + "&civilite=" + data.data.civilite + "&nom=" + data.data.nom + "&prenom=" + data.data.prenom;
         }
-    })
+        if(infoReponse.status_code == 200  && value == "delete"){
+            document.location.href="./medecin/DeleteMedecin.php?Id_Medecin=" + data.data.Id_Medecin + "&civilite=" + data.data.civilite + "&nom=" + data.data.nom + "&prenom=" + data.data.prenom;
+        }
+        })
 }
 
 
@@ -113,9 +116,8 @@ document.getElementById('AllMedecinModify').addEventListener('change', function(
 // get l'element selectionner par l'user via selectedOption (MODIFIER)
 document.getElementById('formMedecinModify').addEventListener('submit', function(e){ // GET MEDECIN BY ID
     e.preventDefault();
-    getMedecinById(selectedOptionModify.value);
+    getMedecinById(selectedOptionModify.value,"modify");
 });
-
 
 //recuperer la valeur selectionner par l'utilisateur (SUPPRIMER)
 document.getElementById('AllMedecinDelete').addEventListener('change', function() { 
@@ -124,7 +126,7 @@ document.getElementById('AllMedecinDelete').addEventListener('change', function(
 // get l'element selectionner par l'user via selectedOption (SUPPRIMER)
 document.getElementById('formMedecinDelete').addEventListener('submit', function(e){ // GET MEDECIN BY ID
     e.preventDefault();
-    getMedecinById(selectedOptionDelete.value);
+    getMedecinById(selectedOptionDelete.value,"delete");
 });
 
 

@@ -16,7 +16,6 @@ function modifyMedecin(event){
         body: JSON.stringify(data)
     })
     .then(data => {
-        console.log(data);
         if (data.status === 200) {
             alert("Médecin modifier avec succès!");
             document.location.href="../Medecins.php";

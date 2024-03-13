@@ -45,7 +45,6 @@
                 <!-- MODIFICATION D'UN MEDECIN  -->
                 <div class="modifications_usagers">
                     <form action="" method="post" id="formMedecinModify">
-                        <input type="hidden" name="context" value="Modify">
                         <h2>Modifier un médecin</h2>
                         <select name="allMedecin" id="AllMedecinModify">
                             <option value="" selected disabled>Sélectionnez un médecin</option>
@@ -56,7 +55,7 @@
 
                 <!-- SUPPRESSION D'UN MEDECIN -->
                 <div class="suppresion_usagers">
-                    <form action="" method="post" class="formMedecinDelete">
+                    <form action="" method="post" class="formMedecinDelete" id="formMedecinDelete">
                         <h2>Supprimer un médecin</h2>
                         <select name="allMedecin" id="AllMedecinDelete">
                             <option value="" selected disabled>Sélectionnez un médecin</option>
