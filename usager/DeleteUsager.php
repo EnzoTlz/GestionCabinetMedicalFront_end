@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modifier un médecin</title>
+    <title>Supprimer un usager</title>
     <link rel="stylesheet" href="../style/modifyUsager.css">
     <link rel="stylesheet" href="../style/global.css">
 </head>
@@ -11,9 +11,9 @@
 <?php
 
         echo '<div class="modifUsager">';
-            echo '<form action="" method="DELETE" class="formDeleteUsager">';
+            echo '<form action="" method="DELETE" id="formUsagerDelete">';
 
-                echo '<input type="hidden" name="user_id" value="' . $_GET['Id_Usager'] . '">';
+                echo '<input type="hidden" name="user_id" id="Id_Usager" value="' . $_GET['Id_Usager'] . '">';
 
                 echo '<label for="civilite_homme"><input type="radio" disabled name="civilite" value="homme" required';
                 echo ($_GET['civilite'] == 'M.') ? ' checked' : '';
@@ -41,7 +41,7 @@
                 echo 'Numéro de sécurité sociale: <input type="text" readonly name="form_numero_securite_social" value="' . $_GET['num_secu'] . '"><br>';
                 echo 'Médecin référent: <input type="text" readonly name="num_secu" value="' . $_GET['medecin_referent'] . '"><br>';
                 
-                echo '<input type="submit" value="Modifier">';
+                echo '<input type="submit" value="Supprimer">';
             echo '</form>';
         echo '</div>';
 
@@ -49,5 +49,6 @@
     <button class="button_back">
         <a href="../Usagers.php" style="text-decoration: none;">Retour</a>
     </button>
+    <script src="DeleteUsager.js"></script>
 </body>
 </html>
