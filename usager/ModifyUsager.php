@@ -4,57 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Modifier un médecin</title>
+    
+
+    <link rel="stylesheet" href="../style/modifyUsager.css">
+    <link rel="stylesheet" href="../style/global.css">
 </head>
 <body>
     <?php
 
-        require_once("../../back_end/Objects/Usager.php");
-
-        $Id_Usager = $_GET['Id_Usager'];
-        $civilite = $_GET['civilite'];
-        $nom = $_GET['nom'];
-        $prenom = $_GET['prenom'];
-        $adresse = $_GET['adresse'];
-        $date_naissance = $_GET['date_naissance'];
-        $lieu_naissance = $_GET['lieu_naissance'];
-        $numero_securite_social = $_GET['numero_securite_social'];
-
-        $usager = new Usager();
-
-        $usager->setId($Id_Usager);
-        $usager->setCivilite($civilite);
-        $usager->setNom($nom);
-        $usager->setPrenom($prenom);
-        $usager->setAdresse($adresse);
-        $usager->setDateNaissance($date_naissance);
-        $usager->setLieuNaissance($lieu_naissance);
-        $usager->setNumeroSecuriteSocial($numero_securite_social);
-
-        echo '<link rel="stylesheet" href="../style/modifyUsager.css">';
-        echo '<link rel="stylesheet" href="../style/global.css">';
 
         echo '<div class="modifUsager">';
-        echo '<form action="../../back_end/Usager/ModifyUser.php" method="POST" class="modify-form">';
-        
-        echo '<input type="hidden" name="user_id" value="' . $usager->getIdUsager() . '">';
+            echo '<form action="../../back_end/Usager/ModifyUser.php" method="POST" class="modify-form">';
+            
+                echo '<input type="hidden" name="user_id" value="' . $_GET['Id_Usager'] . '">';
 
-        echo '<label for="civilite_homme"><input type="radio" name="civilite" value="homme" required';
-        echo ($usager->getCivilite() == 'homme') ? ' checked' : '';
-        echo '>homme</label>';
-        
-        echo '<label for="civilite_femme"><input type="radio" name="civilite" value="femme" required';
-        echo ($usager->getCivilite() == 'femme') ? ' checked' : '';
-        echo '>femme</label><br>';
+                echo '<label for="civilite_homme"><input type="radio" name="civilite" value="homme" required';
+                echo ($_GET['civilite'] == 'M.') ? ' checked' : '';
+                echo '>M.</label>';
+                
+                echo '<label for="civilite_femme"><input type="radio" name="civilite" value="femme" required';
+                echo ($_GET['civilite'] == 'Mme.') ? ' checked' : '';
+                echo '>Mme.</label><br>';
 
-        echo 'Nom: <input type="text"  name="form_nom" value="' . $usager->getNom() . '" ><br>';
-        echo 'Prénom: <input type="text" name="form_prenom" value="' . $usager->getPrenom() . '"><br>';
-        echo 'Adresse: <input type="text" name="form_adresse" value="' . $usager->getAdresse() . '"><br>';
-        echo 'Date de naissance: <input type="text" name="form_date_naissance" value="' . $usager->getDateNaissance() . '"><br>';
-        echo 'Lieu de naissance: <input type="text" name="form_lieu_naissance" value="' . $usager->getLieuNaissance() . '"><br>';
-        echo 'Numéro de sécurité sociale: <input type="text" name="form_numero_securite_social" value="' . $usager->getNumeroSecuriteSocial() . '"><br>';
-        
-        echo '<input type="submit" value="Modifier">';
-        echo '</form>';
+                echo '<label for="civilite_homme"><input type="radio" name="sexe" value="H" required';
+                echo ($_GET['sexe'] == 'H') ? ' checked' : '';
+                echo '>homme</label>';
+                
+                echo '<label for="civilite_femme"><input type="radio" name="sexe" value="F" required';
+                echo ($_GET['civilite'] == 'F') ? ' checked' : '';
+                echo '>femme</label><br>';
+
+                echo 'Nom: <input type="text"  name="form_nom" value="' . $_GET['nom'] . '" ><br>';
+                echo 'Prénom: <input type="text" name="form_prenom" value="' . $_GET['prenom'] . '"><br>';
+                echo 'Adresse: <input type="text" name="form_adresse" value="' . $_GET['adresse'] . '"><br>';
+                echo 'Ville: <input type="text" name="form_adresse" value="' . $_GET['ville'] . '"><br>';
+                echo 'Code postal: <input type="text" name="form_adresse" value="' . $_GET['code_postal'] . '"><br>';
+                echo 'Date de naissance: <input type="text" name="form_date_naissance" value="' . $_GET['date_nais'] . '"><br>';
+                echo 'Lieu de naissance: <input type="text" name="form_lieu_naissance" value="' . $_GET['lieu_nais'] . '"><br>';
+                echo 'Numéro de sécurité sociale: <input type="text" name="form_numero_securite_social" value="' . $_GET['num_secu'] . '"><br>';
+                echo 'Médecin référent: <input type="text" name="num_secu" value="' . $_GET['medecin_referent'] . '"><br>';
+                
+                echo '<input type="submit" value="Modifier">';
+            echo '</form>';
         echo '</div>';
 
     ?>

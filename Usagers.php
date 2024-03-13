@@ -69,43 +69,31 @@
                     <input type="text" name="numero_securite_social" id="numero_securite_social" required>
 
                     <label>Choix du Medecin Référent</label>
-                    <select name="AllMedecin"></select>;
+                    <select name="allMedecin" id="AllMedecinAddUsager">
+                            <option value="" selected disabled>Sélectionnez un médecin</option>
+                    </select>
 
                     <input type="submit" value="Ajouter">
                 </form>
             </div>
 
             <div class="modifications_usagers">
-            <form action="../back_end/Usager/SearchUsager.php" method="post">
+            <form action="" method="post" id="formModifyUsager">
                     <input type="hidden" name="context" value="Modify">
                     <h2>Modifier un usager</h2>
 
-                    <label for="nom">Nom</label>
-                    <input type="text" name="nom" id="nom" required>
-
-                    <label for="prenom">Prenom</label>
-                    <input type="text" name="prenom" id="prenom" required>
-
-                    <label for="numero_securite_social">Numéro sécurité social</label>
-                    <input type="text" class="bas" name="numero_securite_social" id="numero_securite_social">
+                    <select name="allUsager" id="AllUsagerModify"></select>
 
                     <input type="submit" value="Modifier">
                 </form>
             </div>
 
             <div class="suppresion_usagers">
-            <form action="../back_end/Usager/SearchUsager.php" method="post">
+            <form action="" method="post" id="formDeleteUsager">
                 <input type="hidden" name="context" value="Delete">
                     <h2>Supprimer un usager</h2>
 
-                    <label for="nom">Nom</label>
-                    <input type="text" name="nom" id="nom" >
-
-                    <label for="prenom">Prenom</label>
-                    <input type="text" name="prenom" id="prenom" >
-
-                    <label for="numero_securite_social">Numéro sécurité social</label>
-                    <input type="text" class="bas" name="numero_securite_social" id="numero_securite_social" >
+                    <select name="allUsager" id="AllUsagerDelete"></select>
 
                     <input type="submit" value="Supprimer">
                 </form>
