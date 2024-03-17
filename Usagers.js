@@ -28,7 +28,7 @@ function createUsager(event) {
         date_nais: date_naissance,
         lieu_nais: lieu_naissance,
         num_secu: num_secu,
-        medecin_referent: medecin_referent
+        id_medecin: medecin_referent
     };
 
     fetch(baseUrl + "/ControllerAddUsager.php", {
@@ -39,7 +39,7 @@ function createUsager(event) {
         body: JSON.stringify(data)
     })
     .then(data => {
-        if (data.status === 200) {
+        if (data.status === 201) {
             alert("Médecin ajouté avec succès!");
         } else {
             alert("Une erreur s'est produite lors de l'ajout du médecin.",data.status);
@@ -168,10 +168,6 @@ function getUsagerById(id , value){
                                                                 "&ville=" + data.data.ville;        }
         })
 }
-
-
-
-
 
 
 

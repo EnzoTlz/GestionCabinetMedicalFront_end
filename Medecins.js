@@ -22,7 +22,7 @@ function createMedecin(event) {
         body: JSON.stringify(data)
     })
     .then(data => {
-        if (data.status === 200) {
+        if (data.status === 201) {
             alert("Médecin ajouté avec succès!");
         } else {
             alert("Une erreur s'est produite lors de l'ajout du médecin.",data.status);
