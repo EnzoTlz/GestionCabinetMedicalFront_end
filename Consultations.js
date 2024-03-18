@@ -41,7 +41,18 @@ function createRdvForm(rdv) {
         <input type="submit" name="Modifier" value="Modifier">
         <input type="submit" name="Supprimer" value="Supprimer">
     `;
-    
+    form.addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+        
+        const action = event.submitter.value;
+        
+        if (action === "Supprimer") {
+            DeleteConsultation(rdv.id_rendez_vous);
+        }else if(action === "Modifier"){
+            console.log(rdv.date_rendez_vous);
+            document.location.href="./rdv/ModifyRdv.php?id_rendez_vous=" + rdv.id_rendez_vous + "&date_rendez_vous="+rdv.date_rendez_vous + "&heure_rendez_vous="+rdv.heure_rendez_vous + "&duree_rendez_vous="+rdv.duree_rendez_vous + "&Id_Medecin="+rdv.Id_Medecin +"&Id_Usager="+rdv.Id_Usager ;
+        }
+    });
     document.getElementById('allRdv').appendChild(form);
 }
 
@@ -77,6 +88,31 @@ function getAllUsager() {
         alert(error.message);
     });
 }
+
+function DeleteConsultation($id_Consultation){
+    fetch(baseUrl + "/ControllerDeleteRdv.php?id=" + $id_Consultation, {
+        method: 'DELETE',
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Une erreur s\'est produite lors de la suppression de la consultation.');
+        }
+        return response.json(); 
+    })
+    .then(data => {
+        if(data.status_code === 200) {
+            alert('La consultation a été supprimée avec succès.');
+            location.reload();
+        } else {
+            alert('La consultation n\'a pas été supprimée.');
+        }
+    })
+    .catch(error => {
+        alert(error.message);
+    });
+
+}
+
 
 document.addEventListener('DOMContentLoaded', getAllUsager);
 document.addEventListener('DOMContentLoaded', getAllRdv);

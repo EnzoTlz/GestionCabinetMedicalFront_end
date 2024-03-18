@@ -1,8 +1,6 @@
 const baseUrl = "https://gestionmedical.alwaysdata.net/api/controllers/controllerUsager";
 
-function ModifyUsager(){
-    // formModifyMedecin
-}
+
 function modifyUsager(event){
     event.preventDefault();
     var data = {

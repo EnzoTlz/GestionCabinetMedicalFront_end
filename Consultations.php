@@ -46,7 +46,7 @@
             <input type="submit" name="Reinitialiser" value="Reinitialiser">
         </form> -->
         <h1>Liste des rendez-vous</h1>
-        <div id="allRdv" class="allRdv"></div>
+        <div id="allRdv" ></div>
         
         <script src="Consultations.js"></script>
     </body>

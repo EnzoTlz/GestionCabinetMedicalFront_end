@@ -1,0 +1,33 @@
+const baseUrl = "https://gestionmedical.alwaysdata.net/api/controllers/controllerRendezVous";
+
+function modifyRdv(event){
+    event.preventDefault();
+    var data = {
+        id: document.getElementById("id_rendez_vous").value,
+        id_medecin: document.getElementById("Id_Medecin").value,
+        id_usager: document.getElementById("Id_Usager").value,
+        date_consult: document.getElementById("date_rendez_vous").value,
+        heure_consult: document.getElementById("heure_rendez_vous").value,
+        duree_consult: document.getElementById("duree_rendez_vous").value
+    }
+    fetch(baseUrl + "/ControllerModifyRdv.php" + "?id=" + data.id , {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(data => {
+        if (data.status === 200) {
+            alert("Consultation modifier avec succès!");
+            document.location.href="../Consultations.php";
+        } else {
+            alert("Une erreur s'est produite lors de la modification de la consultation.",data.status);
+        }
+    })
+    .catch(error => {
+        alert("Une erreur s'est produite lors de l'envoi de la requête.", error);
+    });
+}
+document.getElementById('formModifyRdv').addEventListener('submit', modifyRdv); // MODIFY
+
