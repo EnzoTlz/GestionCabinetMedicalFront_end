@@ -61,7 +61,7 @@ function getAllUsager() {
     fetch(baseUrlUsager + "/ControllerGetAllUsager.php")
     .then(response => {
         if (!response.ok) {
-            throw new Error('Une erreur s\'est produite lors de la récupération des médecins.');
+            throw new Error('Une erreur s\'est produite lors de la récupération des patients.');
         }
         return response.json(); 
     })
@@ -113,6 +113,20 @@ function DeleteConsultation($id_Consultation){
 
 }
 
+function AddRdv($id){
+
+    document.location.href="./rdv/AddRdv.php?Id_Usager=" + $id;
+
+}
 
 document.addEventListener('DOMContentLoaded', getAllUsager);
 document.addEventListener('DOMContentLoaded', getAllRdv);
+
+document.getElementById('AllUsagerAddRdv').addEventListener('change', function() { 
+    selectedOptionAdd = this.options[this.selectedIndex];
+    // console.log(selectedOptionAdd.value)
+});
+document.getElementById('formAddConsultations').addEventListener('submit', function(e){ // GET MEDECIN BY ID
+    e.preventDefault();
+    AddRdv(selectedOptionAdd.value);
+});

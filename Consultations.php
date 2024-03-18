@@ -23,7 +23,7 @@
         
         <h1>Creation de rendez-vous</h1>
         <div class="register">
-            <form action="" method="POST">
+            <form action="" method="POST" id="formAddConsultations">
                 <select name="allUsager" id="AllUsagerAddRdv"></select>
                 <input type="submit" value="Ajouter un rendez-vous">
             </form>
