@@ -1,25 +1,24 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Secretaire</title>
+    <link  rel="stylesheet" href="../style/global.css">
+    <link  rel="stylesheet" href="../style/form_usagers.css">
 
-    <link  rel="stylesheet" href="style/global.css">
-    <link  rel="stylesheet" href="style/index.css">
 </head>
-
 <body>
-    <h1>Page de Connection</h1>
-    <h2>Vous êtes :</h2>
-    <form method="post" action="../back_end/Login/login.php">
-        <input type="submit" name="btnSecretaire" value="secretaire" />
-        <input type="submit" name="btnPatient" value="patient" />
-        <input type="submit" name="btnMedecin" value="medecin" />
-    </form>
+        <form action="../../back_end/Login/loginSecretaire.php" method="POST">
+        
+            <label for="prenom">Prenom</label>
+            <input for="prenom" type="text" name="prenom" id="prenom" required><br>
+            
+            <label for ="Nom">Mots de passe</label>
+            <input for="mdp" type="text" name="mdp" id="nom" required><br>
+
+            <input type="submit" value="Valider">
+        </form>';
+
 </body>
-
-
-
 </html>

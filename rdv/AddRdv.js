@@ -35,15 +35,16 @@ function getAllMedecin() {
     });
 }
 
-function createConsultations(event) {
+function createConsultations(event,id_medecin) {
     event.preventDefault();
 
-        
         var id_usager = document.getElementById('Id_Usager').value;
         var date_consult = document.getElementById('date_consult').value;
         var heure_consult = document.getElementById('heure_consult').value;
         var duree_consult = document.getElementById('duree_consult').value;
-        var id_medecin = selectedOptionAdd.value;
+        var id_medecin = id_medecin;
+        console.log(id_medecin);
+        console.log(date_consult);
 
     var data = {
 
@@ -65,10 +66,10 @@ function createConsultations(event) {
         if (data.status === 201) {
             alert("Consultation ajouté avec succès!");
             document.location.href="../Consultations.php";
-        } else {
-            alert("Une erreur s'est produite lors de l'ajout d'une consultations.",data.status);
+        } 
+        if(data.status === 409){
+            alert("Le rendez-vous est déjà pris à cette date et heure.",data.status);
         }
-        // AJOUTER ERREUR 409 AU CAS OU COLISION
     })
     .catch(error => {
         alert("Une erreur s'est produite lors de l'envoi de la requête.", error);
@@ -85,5 +86,5 @@ document.getElementById('AllMedecinAddRdv').addEventListener('change', function(
 });
 document.getElementById('formAddConsultation').addEventListener('submit', function(e){ 
     e.preventDefault();
-    createConsultations(e);
+    createConsultations(e, selectedOptionAdd.value);
 });

@@ -37,7 +37,6 @@ function createRdvForm(rdv) {
         Nom & prénom du médecin : <input type="text" name="nom_medecin" value="${rdv.Id_Medecin}"><br>
         <input type="hidden" name="Id_Usager" value="${rdv.Id_Usager}">
         <input type="hidden" name="duree_rendez_vous" value="${rdv.duree_rendez_vous}">
-        <input type="hidden" name="numero_securite_social" value=""><br>
         <input type="submit" name="Modifier" value="Modifier">
         <input type="submit" name="Supprimer" value="Supprimer">
     `;
