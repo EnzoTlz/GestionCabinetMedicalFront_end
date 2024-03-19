@@ -42,5 +42,7 @@ function getAllStatsUsager() {
         alert(error.message);
     });
 }
+
+
 document.addEventListener('DOMContentLoaded', getAllStatsUsager);
 document.addEventListener('DOMContentLoaded', getAllStatsMedecin);
