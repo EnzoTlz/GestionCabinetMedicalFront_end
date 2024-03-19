@@ -12,10 +12,10 @@
                 echo '<div class="AddRdv">';
 
                 echo '<form action="" method="post" id="formAddConsultation">';
-                echo 'Id usager : <input type="text" id="Id_Usager" value="' . $_GET['Id_Usager'] . '">';
-                // echo 'Nom: <input type="text" readonly name="nom" value="' . $commandSearch->usager->getNom() . '" ><br>';
-                // echo 'Prénom: <input type="text" readonly name="prenom" value="' . $commandSearch->usager->getPrenom() . '"><br>';
-                echo 'Médecin Référent: <select name="allMedecin" id="AllMedecinAddRdv"></select>';
+                echo '<input type="hidden" id="Id_Usager" value="' . $_GET['Id_Usager'] . '">';
+                echo 'Nom & prénom du patient: <input type="text" readonly name="nom" value="' . $_GET['nom'] . ' ' .$_GET['prenom'] .'" ><br>';
+
+                echo 'Choix du médecin: <select name="allMedecin" id="AllMedecinAddRdv"></select>';
 
                 echo 'Date du rendez-vous : <input type="date" id="date_consult" required> <br>';
                 echo 'Heure du rendez-vous: <input type="time" id="heure_consult" required><br>';

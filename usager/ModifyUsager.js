@@ -7,16 +7,18 @@ function modifyUsager(event){
         id: document.getElementById("Id_Usager").value,
         nom: document.getElementById("nom").value,
         prenom: document.getElementById("prenom").value,
-        civilite: document.getElementById("civilite").value,
-        adresse:document.getElementById("adresse").value,
-        sexe:document.getElementById("sexe").value,
-        code_postal:document.getElementById("code_postal").value,
-        ville:document.getElementById("ville").value,
-        lieu_nais:document.getElementById("lieu_nais").value,
-        date_nais:document.getElementById("date_nais").value,
-        num_secu:document.getElementById("num_secu").value,
-        medecin_referent:document.getElementById("medecin_referent").value
-    }
+        civilite: document.querySelector('input[name="civilite"]:checked').value,
+        adresse: document.getElementById("adresse").value,
+        sexe: document.querySelector('input[name="sexe"]:checked').value,
+        code_postal: document.getElementById("code_postal").value,
+        ville: document.getElementById("ville").value,
+        lieu_nais: document.getElementById("lieu_nais").value,
+        date_nais: document.getElementById("date_nais").value,
+        num_secu: document.getElementById("num_secu").value,
+        medecin_referent: document.getElementById("medecin_referent").value
+    };
+    
+    
     console.log(data);
     fetch(baseUrl + "/ControllerModifyUsager.php" + "?id=" + data.id , {
         method: 'PATCH',

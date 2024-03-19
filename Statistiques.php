@@ -23,70 +23,49 @@
 
         <h1>Statistique des âges des usagers</h1>
         <div class="tableau">
-        <!-- <?php
-        //     require_once("../back_end/Objects/DbConfig.php");
-        //     require_once("../back_end/Objects/Statistique.php");
-        //     $statistique = new Statistique();
-        //     $nbFemme = $statistique->getNbFemme();
-        //     $nbHomme = $statistique->getNbHomme();
-        //     $getNbHommeMoins25Ans = $statistique->getNbHommeMoins25Ans();
-        //     $getNbFemmeMoins25Ans = $statistique->getNbFemmeMoins25Ans();
-        //     $getNbHommeEntre25et50Ans = $statistique->getNbHommeEntre25et50Ans();
-        //     $getNbFemmeEntre25et50Ans = $statistique->getNbFemmeEntre25et50Ans();
-        //     $getNbHommePlus50Ans = $statistique->getNbHommePlus50Ans();
-        //     $getNbFemmePlus50Ans = $statistique->getNbFemmePlus50Ans();
-            
-        //     $PrintAllNameMedecin = $statistique->PrintAllNameMedecinAndAllHours();
-
-        //   echo '<table>
-        //           <tbody>
-        //               <tr>
-        //                   <th scope="col">Tranche d\'âge</th>
-        //                   <th scope="col">Nb Hommes</th>
-        //                   <th scope="col">Nb Femmes</th>
-        //               </tr>
-        //               <tr>
-        //               <th scope="row">Total</th>
-        //                 <td>' . $nbHomme[0] . '</td>
-        //                 <td>' . $nbFemme[0] . '</td>
-        //               </tr>
-        //               <tr>
-        //                   <th scope="row">Moins de 25 ans</th>
-        //                   <td>' . $getNbHommeMoins25Ans[0] . '</td>
-        //                   <td>' . $getNbFemmeMoins25Ans[0] . '</td>
-        //               </tr>
-        //               <tr>
-        //                   <th scope="row">Entre 25 et 50 ans</th>
-        //                   <td>' .$getNbHommeEntre25et50Ans[0] .'</td>
-        //                   <td>' .$getNbFemmeEntre25et50Ans[0] .'</td>
-        //               </tr>
-        //               <tr>
-        //                   <th scope="row">Plus de 50 ans</th>
-        //                   <td>' . $getNbHommePlus50Ans[0] .'</td>
-        //                   <td>' . $getNbFemmePlus50Ans[0] . '</td>
-        //               </tr>
-        //           </tbody>
-        //       </table>';
-?>
+        <table>
+            <tbody>
+                <tr>
+                    <th scope="col">Tranche d'âge</th>
+                    <th scope="col">Nb Hommes</th>
+                    <th scope="col">Nb Femmes</th>
+                </tr>
+                <tr>
+                    <th scope="row">Total</th>
+                    <td id="totalHommes"></td>
+                    <td id="totalFemmes"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Moins de 25 ans</th>
+                    <td id="moins25Hommes"></td>
+                    <td id="moins25Femmes"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Entre 25 et 50 ans</th>
+                    <td id="entre25et50Hommes"></td>
+                    <td id="entre25et50Femmes"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Plus de 50 ans</th>
+                    <td id="plus50Hommes"></td>
+                    <td id="plus50Femmes"></td>
+                </tr>
+            </tbody>
+        </table>
               <h1>Statistique Medecin</h1>
-        <?php
-        // if ($PrintAllNameMedecin !== null) {
-        //     echo '<table>
-        //         <tbody>
-        //             <tr>
-        //                 <th scope="col">Nom & Prenom</th>
-        //                 <th scope="col">Nombres d\'heures réalisés</th>
-        //             </tr>';
-        //     foreach ($PrintAllNameMedecin as $medecin) {
-        //         echo '<tr>' . $medecin . '</tr>';
-        //     }
-        //     echo '</tbody></table>';
-        // } else {
-        //     echo 'Aucun résultat trouvé.';
-        // }
-        ?>
 
-        </div> -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nom Médecin</th>
+                        <th>Temps</th>
+                    </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+            </table>
+
+
+        </div>
     <script src="Statistiques.js"></script>
 </body>
 

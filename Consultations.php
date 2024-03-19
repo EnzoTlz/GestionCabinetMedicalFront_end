@@ -24,27 +24,20 @@
         <h1>Creation de rendez-vous</h1>
         <div class="register">
             <form action="" method="POST" id="formAddConsultations">
-                <select name="allUsager" id="AllUsagerAddRdv"></select>
+                <select name="allUsager" id="AllUsagerAddRdv" class="allUsager"></select>
                 <input type="submit" value="Ajouter un rendez-vous">
             </form>
         </div>
 
-        <!-- <form action="" method="post" class="form_recherche">
-            <?php
-                // require_once("../back_end/Objects/Usager.php");
+        <form action="" method="post" class="form_recherche">
 
-                // $usager = new Usager();
-                // $printAllMedecin = $usager->PrintAllMedecin();
 
-                // echo '<select name="medecin_selectionner">';
-                // echo '<option value="" selected disabled>Sélectionnez un médecin</option>'; // Option par défaut
-                // echo $printAllMedecin;
-                // echo '</select>';
-                
-            ?>
+                <select name="medecin_selectionner">';
+                </select>
+
             <input type="submit" name="Rechercher"value="Rechercher">
             <input type="submit" name="Reinitialiser" value="Reinitialiser">
-        </form> -->
+        </form>
         <h1>Liste des rendez-vous</h1>
         <div id="allRdv" ></div>
         

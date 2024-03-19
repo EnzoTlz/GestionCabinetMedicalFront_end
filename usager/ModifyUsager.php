@@ -11,27 +11,25 @@
 </head>
 <body>
     <?php
-
-
         echo '<div class="modifUsager">';
             echo '<form action="" method="PATCH" class="formModifyUsager" id="formModifyUsager">';
             
-                echo '<input type="hidden" id="Id_Usager"name="user_id" value="' . $_GET['Id_Usager'] . '">';
+                echo '<input type="hidden" id="Id_Usager" name="user_id" value="' . $_GET['Id_Usager'] . '">';
 
-                echo '<label for="civilite_homme"><input type="radio" id="civilite" value="homme" required';
+                echo '<label for="civilite_homme"><input type="radio" id="civilite_homme" name="civilite" value="M." required';
                 echo ($_GET['civilite'] == 'M.') ? ' checked' : '';
                 echo '>M.</label>';
                 
-                echo '<label for="civilite_femme"><input type="radio" id="civilite" value="femme" required';
+                echo '<label for="civilite_femme"><input type="radio" id="civilite_femme" name="civilite" value="Mme." required';
                 echo ($_GET['civilite'] == 'Mme.') ? ' checked' : '';
                 echo '>Mme.</label><br>';
 
-                echo '<label for="civilite_homme"><input type="radio" id="sexe" value="H" required';
+                echo '<label for="sexe_homme"><input type="radio" id="sexe_homme" name="sexe" value="H" required';
                 echo ($_GET['sexe'] == 'H') ? ' checked' : '';
                 echo '>homme</label>';
                 
-                echo '<label for="civilite_femme"><input type="radio" id="sexe" value="F" required';
-                echo ($_GET['civilite'] == 'F') ? ' checked' : '';
+                echo '<label for="sexe_femme"><input type="radio" id="sexe_femme" name="sexe" value="F" required';
+                echo ($_GET['sexe'] == 'F') ? ' checked' : '';
                 echo '>femme</label><br>';
 
                 echo 'Nom: <input type="text"  id="nom" value="' . $_GET['nom'] . '" ><br>';
@@ -47,8 +45,8 @@
                 echo '<input type="submit" value="Modifier">';
             echo '</form>';
         echo '</div>';
-
     ?>
+
     <button class="button_back">
         <a href="../Usagers.php" style="text-decoration: none;">Retour</a>
     </button>
