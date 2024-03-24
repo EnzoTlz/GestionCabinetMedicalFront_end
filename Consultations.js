@@ -23,6 +23,33 @@ function getAllRdv() {
         alert(error.message);
     });
 }
+
+
+function getAllRdvByIdMedecin($Id_Medecin) {
+    fetch(baseUrl + "/ControllerGetAllRdvByIdMedecin.php?id=" + $Id_Medecin)
+    .then(response => {
+        if (!response.ok) {
+            getAllRdv();
+            throw new Error('Ce médecin n\'a pas de rendez-vous.');
+        }
+        return response.json(); 
+    })
+    .then(data => {
+        if(data.status_code === 200 && data.data.length > 0) {
+            data.data.forEach(rdv => {
+                createRdvForm(rdv);
+                console.log(rdv);
+            });
+        } else {
+            console.log("fail");
+        }
+    })
+    .catch(error => {
+        alert(error.message);
+    });
+}
+
+
 function convertMinutesToHoursMinutes(minutes) {
     var hours = Math.floor(minutes / 60);
     var remainingMinutes = minutes % 60;
@@ -198,6 +225,76 @@ function AddRdv($id, nom , prenom){
 
 }
 
+
+function getAllMedecin() {
+    fetch(baseUrlMedecin + "/ControllerGetAllMedecin.php")
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Une erreur s\'est produite lors de la récupération des médecins.');
+        }
+        return response.json(); 
+    })
+    .then(data => {
+        if(data.status_code === 200 && data.data.length > 0) {
+
+            const selectAdd = document.getElementById('AllMedecin'); 
+            selectAdd.innerHTML = '<option value="" selected disabled>Sélectionnez un médecin</option>';
+
+            data.data.forEach(medecin => {
+                const optionAdd = document.createElement('option');
+                optionAdd.value = medecin.Id_Medecin;
+                optionAdd.text = `${medecin.civilite} ${medecin.prenom} ${medecin.nom}`;
+                selectAdd.appendChild(optionAdd);
+            });
+
+        } else {
+            console.log('Aucun médecin trouvé ou erreur de réponse.');
+        }
+    })
+    .catch(error => {
+        alert(error.message);
+    });
+}
+
+
+
+
+
+// FILTRE DE RECHERCHE DE RDV
+document.addEventListener('DOMContentLoaded', getAllMedecin);
+document.getElementById('AllMedecin').addEventListener('change', function() { 
+    selectedOptionSearch = this.options[this.selectedIndex];
+    // console.log(selectedOptionSearch.value)
+});
+
+document.getElementById('formSearchMedecin').addEventListener('submit', function(e){ 
+    e.preventDefault();
+
+    if (e.submitter.name === "Rechercher") {
+        const allRdvForms = document.querySelectorAll('.allRdv');
+        allRdvForms.forEach(form => {
+            form.remove();
+        });
+        console.log(selectedOptionSearch.value);
+        // Afficher les rendez-vous pour le médecin sélectionné
+        getAllRdvByIdMedecin(selectedOptionSearch.value);
+    } else if (e.submitter.name === "Reinitialiser") {
+        document.getElementById('AllMedecin').value = ""; // Réinitialiser la sélection du médecin
+
+        // Supprimer tous les rendez-vous actuellement affichés
+        const allRdvForms = document.querySelectorAll('.allRdv');
+        allRdvForms.forEach(form => {
+            form.remove();
+        });
+
+        // Afficher tous les rendez-vous à nouveau
+        getAllRdv();
+    }
+});
+
+
+
+
 document.addEventListener('DOMContentLoaded', getAllUsager);
 document.addEventListener('DOMContentLoaded', getAllRdv);
 
@@ -211,7 +308,5 @@ document.getElementById('formAddConsultations').addEventListener('submit', funct
     var parts = fullName.split(' '); // Divisez la chaîne en fonction des espaces
     var prenom = parts[1]; // 2eme champs ==> prenom
     var nom = parts.slice(2).join(' '); // Le reste nom
-    console.log(prenom);
-    console.log(nom);
     AddRdv(selectedOptionAdd.value , nom , prenom);
 });

@@ -29,12 +29,8 @@
             </form>
         </div>
 
-        <form action="" method="post" class="form_recherche">
-
-
-                <select name="medecin_selectionner">';
-                </select>
-
+        <form action="" method="post" class="form_recherche" id="formSearchMedecin">
+            <select id="AllMedecin"></select>
             <input type="submit" name="Rechercher"value="Rechercher">
             <input type="submit" name="Reinitialiser" value="Reinitialiser">
         </form>

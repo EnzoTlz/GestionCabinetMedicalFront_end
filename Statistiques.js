@@ -42,6 +42,7 @@ function getAllStatsUsager() {
         return response.json(); 
     })
     .then(data => {
+        console.log(data);
         if(data.status_code === 200) {
             document.getElementById("totalHommes").textContent = data["nb homme"];
             document.getElementById("totalFemmes").textContent = data["nb femme"];
