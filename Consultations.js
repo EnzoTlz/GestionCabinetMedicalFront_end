@@ -1,9 +1,9 @@
-const baseUrl = "https://gestionmedical.alwaysdata.net/api/controllers/controllerRendezVous";
-const baseUrlUsager = "https://gestionmedical.alwaysdata.net/api/controllers/controllerUsager";
-const baseUrlMedecin = "https://gestionmedical.alwaysdata.net/api/controllers/controllerMedecin";
+const baseUrl = "https://gestionmedical.alwaysdata.net/api/consultations";
+const baseUrlUsager = "https://gestionmedical.alwaysdata.net/api/usagers";
+const baseUrlMedecin = "https://gestionmedical.alwaysdata.net/api/medecins";
 
 function getAllRdv() {
-    fetch(baseUrl + "/ControllerGetAllRdv.php")
+    fetch(baseUrl)
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des consultations.');
@@ -26,7 +26,7 @@ function getAllRdv() {
 
 
 function getAllRdvByIdMedecin($Id_Medecin) {
-    fetch(baseUrl + "/ControllerGetAllRdvByIdMedecin.php?id=" + $Id_Medecin)
+    fetch(baseUrl + "/" + $Id_Medecin)
     .then(response => {
         if (!response.ok) {
             getAllRdv();
@@ -121,7 +121,7 @@ function createRdvForm(rdv) {
 
 // Fonction pour récupérer les informations du médecin par ID
 function getMedecinById(id) {
-    return fetch(baseUrlMedecin + "/ControllerGetMedecin.php" + "?id=" + id)
+    return fetch(baseUrlMedecin + "/" + id)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -143,7 +143,7 @@ function getMedecinById(id) {
 
 
 function getUsagerById(id){
-    return fetch(baseUrlUsager + "/ControllerGetUsager.php" + "?id="+id )
+    return fetch(baseUrlUsager + "/"+id )
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -164,7 +164,7 @@ function getUsagerById(id){
 
 
 function getAllUsager() {
-    fetch(baseUrlUsager + "/ControllerGetAllUsager.php")
+    fetch(baseUrlUsager)
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des patients.');
@@ -196,7 +196,7 @@ function getAllUsager() {
 }
 
 function DeleteConsultation($id_Consultation){
-    fetch(baseUrl + "/ControllerDeleteRdv.php?id=" + $id_Consultation, {
+    fetch(baseUrl + "/" + $id_Consultation, {
         method: 'DELETE',
     })
     .then(response => {
@@ -227,7 +227,7 @@ function AddRdv($id, nom , prenom){
 
 
 function getAllMedecin() {
-    fetch(baseUrlMedecin + "/ControllerGetAllMedecin.php")
+    fetch(baseUrlMedecin)
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des médecins.');

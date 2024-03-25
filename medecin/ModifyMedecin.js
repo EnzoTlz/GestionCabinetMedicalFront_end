@@ -1,4 +1,4 @@
-const baseUrl = "https://gestionmedical.alwaysdata.net/api/controllers/controllerMedecin";
+const baseUrl = "https://gestionmedical.alwaysdata.net/api/medecins";
 function modifyMedecin(event){
     event.preventDefault();
     var data = {
@@ -7,8 +7,7 @@ function modifyMedecin(event){
         prenom: document.getElementById("prenom").value,
         civilite: document.getElementById("civilite").value
     }
-    console.log(data);
-    fetch(baseUrl + "/ControllerModifyMedecin.php" + "?id=" + data.id , {
+    fetch(baseUrl + "/" + data.id , {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
