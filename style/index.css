@@ -1,41 +1,66 @@
+/* Style global */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #e9ecef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     margin: 0;
-    padding: 0;
 }
 
-h1 {
-    color: #3498db;
-    margin-bottom: 20px;
-}
-
-h2 {
-    color: #333;
-    margin-bottom: 30px;
+.form_global {
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
 }
 
 form {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    margin-top: 20px;
+    flex-direction: column;
+}
+
+label {
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 14px;
+    color: #495057;
+}
+
+input[type="text"],
+input[type="password"] {
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 input[type="submit"] {
-    background-color: #3498db;
-    color: #fff;
-    padding: 15px 30px;
-    margin: 15px 10px;
-    border: 2px solid #2980b9;
-    border-radius: 5px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 18px;
-    transition: background-color 0.3s ease-in-out;
+    transition: background-color 0.15s ease-in-out;
 }
 
 input[type="submit"]:hover {
-    background-color: #2980b9;
+    background-color: #0056b3;
+}
+
+/* Ajout d'un peu d'espace au-dessus du formulaire pour respirer */
+body > .form_global {
+    margin-top: -100px;
 }
