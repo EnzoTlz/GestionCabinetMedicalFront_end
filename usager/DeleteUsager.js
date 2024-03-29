@@ -1,4 +1,4 @@
-const baseUrl = "https://gestionmedical.alwaysdata.net/api/controllers/controllerUsager";
+const baseUrl = "https://gestionmedical.alwaysdata.net/api/usagers";
 //DELETE USAGER
 
 function deleteUsager(event){
@@ -6,7 +6,7 @@ function deleteUsager(event){
     var data = {
         id: document.getElementById("Id_Usager").value,
     }
-    fetch (baseUrl + "/ControllerDeleteUsager.php" + "?id=" + data.id,{
+    fetch (baseUrl + "/" + data.id,{
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',

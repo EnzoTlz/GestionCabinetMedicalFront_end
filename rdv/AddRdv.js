@@ -1,10 +1,10 @@
 
-const baseUrlMedecin = "https://gestionmedical.alwaysdata.net/api/controllers/controllerMedecin";
-const baseUrl = "https://gestionmedical.alwaysdata.net/api/controllers/controllerRendezVous";
+const baseUrlMedecin = "https://gestionmedical.alwaysdata.net/api/medecins";
+const baseUrl = "https://gestionmedical.alwaysdata.net/api/consultations";
 
 
 function getAllMedecin() {
-    fetch(baseUrlMedecin + "/ControllerGetAllMedecin.php")
+    fetch(baseUrlMedecin)
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des médecins.');
@@ -43,8 +43,7 @@ function createConsultations(event,id_medecin) {
         var heure_consult = document.getElementById('heure_consult').value;
         var duree_consult = document.getElementById('duree_consult').value;
         var id_medecin = id_medecin;
-        console.log(id_medecin);
-        console.log(date_consult);
+
 
     var data = {
 
@@ -55,7 +54,7 @@ function createConsultations(event,id_medecin) {
         id_medecin: id_medecin
     };
 
-    fetch(baseUrl + "/ControllerAddRdv.php", {
+    fetch(baseUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

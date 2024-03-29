@@ -1,5 +1,6 @@
-const baseUrl = "https://gestionmedical.alwaysdata.net/api/controllers/controllerUsager";
-const baseUrlMedecin = "https://gestionmedical.alwaysdata.net/api/controllers/controllerMedecin";
+const baseUrl = "https://gestionmedical.alwaysdata.net/api/usagers";
+const baseUrlMedecin = "https://gestionmedical.alwaysdata.net/api/medecins";
+;
 
 
 function createUsager(event) {
@@ -31,7 +32,7 @@ function createUsager(event) {
         id_medecin: medecin_referent
     };
 
-    fetch(baseUrl + "/ControllerAddUsager.php", {
+    fetch(baseUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -52,7 +53,7 @@ function createUsager(event) {
 
 
 function getAllMedecin() {
-    fetch(baseUrlMedecin + "/ControllerGetAllMedecin.php")
+    fetch(baseUrlMedecin)
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des médecins.');
@@ -83,7 +84,7 @@ function getAllMedecin() {
 
 
 function getAllUsager() {
-    fetch(baseUrl + "/ControllerGetAllUsager.php")
+    fetch(baseUrl)
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des médecins.');
@@ -125,7 +126,7 @@ function getAllUsager() {
 }
 
 function getUsagerById(id , value){
-    fetch(baseUrl + "/ControllerGetUsager.php" + "?id="+id )
+    fetch(baseUrl+"/"+id )
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');

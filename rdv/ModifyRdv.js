@@ -1,4 +1,4 @@
-const baseUrl = "https://gestionmedical.alwaysdata.net/api/controllers/controllerRendezVous";
+const baseUrl = "https://gestionmedical.alwaysdata.net/api/medecins";
 
 function modifyRdv(event){
     event.preventDefault();
@@ -10,7 +10,7 @@ function modifyRdv(event){
         heure_consult: document.getElementById("heure_rendez_vous").value,
         duree_consult: document.getElementById("duree_rendez_vous").value
     }
-    fetch(baseUrl + "/ControllerModifyRdv.php" + "?id=" + data.id , {
+    fetch(baseUrl + "/" + data.id , {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',

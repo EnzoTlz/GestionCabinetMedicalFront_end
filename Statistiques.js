@@ -1,7 +1,8 @@
-const baseUrl = "https://gestionmedical.alwaysdata.net/api/controllers/controllerStatistique";
+const baseUrlMedecin = "https://gestionmedical.alwaysdata.net/api/stats/medecins";
+const baseUrlUsager = "https://gestionmedical.alwaysdata.net/api/stats/usagers";
 
 function getAllStatsMedecin() {
-    fetch(baseUrl + "/ControllerGetStatsMedecin.php")
+    fetch(baseUrlMedecin)
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des statistique des médecins.');
@@ -34,7 +35,7 @@ function getAllStatsMedecin() {
 
 
 function getAllStatsUsager() {
-    fetch(baseUrl + "/ControllerGetStatsUsager.php")
+    fetch(baseUrlUsager)
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des statistiques des patients.');
