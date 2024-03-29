@@ -16,7 +16,7 @@ function getJWT(){
     .then(data => {
         console.log(data);
         if (data.status === 200) {
-            document.location.href="./Medecins.php"
+            // document.location.href="./Medecins.php"
         } else {
             alert("Une erreur s'est produite lors de l'ajout du médecin.",data.status);
         }
