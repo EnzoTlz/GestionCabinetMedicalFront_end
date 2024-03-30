@@ -9,6 +9,9 @@
 </head>
 <body>
     <div class="form_global">
+        <?php
+            $_COOKIE['usertoken'];
+        ?>
         <form action="" method="POST" id="form_login">
         
             <label for="login">Login</label>
