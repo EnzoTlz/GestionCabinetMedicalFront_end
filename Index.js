@@ -18,7 +18,7 @@ function getJWT(){
         if (data.status === 200) {
             document.location.href="./Medecins.php"
         } else {
-            alert("Une erreur s'est produite lors de l'ajout du médecin.",data.status);
+            alert("Identifiant invalide",data.status);
         }
     })
     .catch(error => {
