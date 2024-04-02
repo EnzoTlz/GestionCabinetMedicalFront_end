@@ -93,6 +93,36 @@ function getMedecinById(id , value){
         })
 }
 
+function createMedecin(event) {
+    event.preventDefault();
+    var civilite = document.querySelector('input[name="civilite"]:checked').value;
+    var nom = document.getElementById('nom').value;
+    var prenom = document.getElementById('prenom').value;
+    var data = {
+        civilite: civilite,
+        nom: nom,
+        prenom: prenom
+    };
+
+    fetch(baseUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(data => {
+        if (data.status === 201) {
+            alert("Médecin ajouté avec succès!");
+        } else {
+            alert("Une erreur s'est produite lors de l'ajout du médecin.",data.status);
+        }
+    })
+    .catch(error => {
+        alert("Une erreur s'est produite lors de l'envoi de la requête.", error);
+    });
+}
+
 // //lancer ma requete au refresh de la page
 document.addEventListener('DOMContentLoaded', getAllMedecin);
 
