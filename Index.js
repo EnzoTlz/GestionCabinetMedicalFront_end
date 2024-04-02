@@ -15,7 +15,7 @@ function getJWT(){
     })
     .then(data => {
         if (data.status === 200) {
-            const jwtToken = data.data;
+            let jwtToken = data.data;
             console.log(jwtToken);
             // document.location.href="./Medecins.php"
         } else {
