@@ -33,9 +33,15 @@ function createMedecin(event) {
     });
 }
 
-// GET TOUS LES MEDECINS
 function getAllMedecin() {
-    fetch(baseUrl)
+    fetch(baseUrl, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken") // Récupère le jeton JWT du cookie
+        },
+        credentials: 'include'
+    })
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des médecins.');
@@ -75,6 +81,7 @@ function getAllMedecin() {
         alert(error.message);
     });
 }
+
 
 // GET UN MEDECIN
 function getMedecinById(id , value){
