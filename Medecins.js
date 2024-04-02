@@ -24,7 +24,7 @@ function getAllMedecin() {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': getCookie("usertoken")
+            'Authorization': 'Bearer ' + getCookie("usertoken")
         },
         credentials: 'include'
     })
@@ -125,14 +125,14 @@ function createMedecin(event) {
 }
 
 // //lancer ma requete au refresh de la page
-document.addEventListener('DOMContentLoaded', function() {
-    const jwtToken = getCookie("usertoken");
-    if (jwtToken) {
-        console.log("JWT Token:", jwtToken.value);
-    } else {
-        console.log("JWT Token not found.");
-    }
-});
+// document.addEventListener('DOMContentLoaded', function() {
+//     const jwtToken = getCookie("usertoken");
+//     if (jwtToken) {
+//         console.log("JWT Token:", jwtToken.value);
+//     } else {
+//         console.log("JWT Token not found.");
+//     }
+// });
 document.addEventListener('DOMContentLoaded', getAllMedecin);
 
 
