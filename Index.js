@@ -24,6 +24,7 @@ function getJWT(){
         // Accéder au jeton JWT dans les données JSON
         let jwtToken = data.data;
         console.log(jwtToken);
+        document.cookie = `jwtToken=${jwtToken}; path=/;`;
         // Stocker le jeton dans un cookie ou effectuer d'autres actions nécessaires
         // document.location.href="./Medecins.php";
     })
