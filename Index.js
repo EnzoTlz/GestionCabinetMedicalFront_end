@@ -21,12 +21,10 @@ function getJWT(){
         }
     })
     .then(data => {
-        // Accéder au jeton JWT dans les données JSON
         let jwtToken = data.data;
         console.log(jwtToken);
         document.cookie = `jwtToken=${jwtToken}; path=/;`;
-        // Stocker le jeton dans un cookie ou effectuer d'autres actions nécessaires
-        // document.location.href="./Medecins.php";
+        document.location.href="./Medecins.php";
     })
     .catch(error => {
         alert("Une erreur s'est produite lors de l'envoi de la requête: " + error.message);
