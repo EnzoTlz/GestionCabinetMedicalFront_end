@@ -24,7 +24,7 @@ function getAllMedecin() {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + getCookie("usertoken")
+            'Authorization': 'Bearer ' + getCookie("usertoken").value
         },
         credentials: 'include'
     })
