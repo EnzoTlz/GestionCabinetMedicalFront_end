@@ -1,11 +1,26 @@
 const baseUrl = "https://gestionmedical.alwaysdata.net/api/medecins";
 
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        // Vérifie si le cookie commence par le nom spécifié
+        if (cookie.startsWith(name + '=')) {
+            // Renvoie la valeur du cookie
+            return cookie.substring(name.length + 1);
+        }
+    }
+    // Si le cookie n'est pas trouvé, retourne une chaîne vide
+    return '';
+}
+
+
 function getAllMedecin() {
     fetch(baseUrl, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + getCookie("jwtToken") // Assurez-vous que le JWT est inclus ici
+            'Authorization': 'Bearer ' + getCookie("jwtToken")
         },
         credentials: 'include'
     })
