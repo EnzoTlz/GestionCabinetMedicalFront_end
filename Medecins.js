@@ -6,13 +6,16 @@ function getCookie(name) {
         const cookie = cookies[i].trim();
         // Vérifie si le cookie commence par le nom spécifié
         if (cookie.startsWith(name + '=')) {
-            // Renvoie la valeur du cookie
-            return cookie.substring(name.length + 1);
+            // Récupère la valeur du cookie
+            const value = cookie.substring(name.length + 1);
+            // Retourne un objet avec le nom et la valeur du cookie
+            return { name: name, value: value };
         }
     }
-    // Si le cookie n'est pas trouvé, retourne une chaîne vide
-    return '';
+    // Si le cookie n'est pas trouvé, retourne null
+    return null;
 }
+
 
 
 function getAllMedecin() {

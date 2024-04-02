@@ -23,7 +23,7 @@ function getJWT(){
     .then(data => {
         let jwtToken = data.data;
         console.log(jwtToken);
-        document.cookie = `jwtToken=${jwtToken}; path=/;`;
+        document.cookie = `usertoken=${jwtToken}; path=/;`;
         document.location.href="./Medecins.php";
     })
     .catch(error => {
