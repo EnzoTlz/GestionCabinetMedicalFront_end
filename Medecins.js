@@ -4,16 +4,11 @@ function getCookie(name) {
     const cookies = document.cookie.split(';');
     for (let i = 0; i < cookies.length; i++) {
         const cookie = cookies[i].trim();
-        // Vérifie si le cookie commence par le nom spécifié
         if (cookie.startsWith(name + '=')) {
-            // Récupère la valeur du cookie
             const value = cookie.substring(name.length + 1);
-            // Retourne un objet avec le nom et la valeur du cookie
-            console.log({ name: name, value: value });
             return { name: name, value: value };
         }
     }
-    // Si le cookie n'est pas trouvé, retourne null
     return null;
 }
 
@@ -22,11 +17,11 @@ function getCookie(name) {
 function getAllMedecin() {
     fetch(baseUrl, {
         method: 'GET',
+        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + getCookie("usertoken").value
         },
-        credentials: 'include'
     })
     .then(response => {
         if (!response.ok) {
@@ -124,15 +119,7 @@ function createMedecin(event) {
     });
 }
 
-// //lancer ma requete au refresh de la page
-// document.addEventListener('DOMContentLoaded', function() {
-//     const jwtToken = getCookie("usertoken");
-//     if (jwtToken) {
-//         console.log("JWT Token:", jwtToken.value);
-//     } else {
-//         console.log("JWT Token not found.");
-//     }
-// });
+
 document.addEventListener('DOMContentLoaded', getAllMedecin);
 
 
