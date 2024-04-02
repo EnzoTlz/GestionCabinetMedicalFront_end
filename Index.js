@@ -14,8 +14,9 @@ function getJWT(){
     credentials: 'include'
     })
     .then(data => {
-        console.log(data);
         if (data.status === 200) {
+            const jwtToken = data.data;
+            console.log(jwtToken);
             // document.location.href="./Medecins.php"
         } else {
             alert("Identifiant invalide",data.status);
