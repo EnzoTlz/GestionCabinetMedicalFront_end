@@ -23,7 +23,7 @@ function getAllMedecin() {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + getCookie("jwtToken")
+            'Authorization': getCookie("jwtToken")
         },
         credentials: 'include'
     })
