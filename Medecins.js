@@ -5,7 +5,7 @@ function getAllMedecin() {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + getCookie("usertoken") // Assurez-vous que le JWT est inclus ici
+            'Authorization': 'Bearer ' + getCookie("jwtToken") // Assurez-vous que le JWT est inclus ici
         },
         credentials: 'include'
     })
@@ -74,8 +74,6 @@ function getMedecinById(id , value){
         }
         })
 }
-
-
 
 // //lancer ma requete au refresh de la page
 document.addEventListener('DOMContentLoaded', getAllMedecin);
