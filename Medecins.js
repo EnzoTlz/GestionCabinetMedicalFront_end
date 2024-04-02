@@ -9,6 +9,7 @@ function getCookie(name) {
             // Récupère la valeur du cookie
             const value = cookie.substring(name.length + 1);
             // Retourne un objet avec le nom et la valeur du cookie
+            console.log({ name: name, value: value });
             return { name: name, value: value };
         }
     }
@@ -124,6 +125,8 @@ function createMedecin(event) {
 }
 
 // //lancer ma requete au refresh de la page
+document.addEventListener('DOMContentLoaded', getCookie("jwtToken"));
+
 document.addEventListener('DOMContentLoaded', getAllMedecin);
 
 
