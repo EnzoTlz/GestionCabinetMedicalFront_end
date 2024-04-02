@@ -125,8 +125,14 @@ function createMedecin(event) {
 }
 
 // //lancer ma requete au refresh de la page
-document.addEventListener('DOMContentLoaded', getCookie("jwtToken"));
-
+document.addEventListener('DOMContentLoaded', function() {
+    const jwtToken = getCookie("jwtToken");
+    if (jwtToken) {
+        console.log("JWT Token:", jwtToken.value);
+    } else {
+        console.log("JWT Token not found.");
+    }
+});
 document.addEventListener('DOMContentLoaded', getAllMedecin);
 
 
