@@ -24,7 +24,7 @@ function getAllMedecin() {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': getCookie("jwtToken")
+            'Authorization': getCookie("usertoken")
         },
         credentials: 'include'
     })
@@ -126,7 +126,7 @@ function createMedecin(event) {
 
 // //lancer ma requete au refresh de la page
 document.addEventListener('DOMContentLoaded', function() {
-    const jwtToken = getCookie("jwtToken");
+    const jwtToken = getCookie("usertoken");
     if (jwtToken) {
         console.log("JWT Token:", jwtToken.value);
     } else {
