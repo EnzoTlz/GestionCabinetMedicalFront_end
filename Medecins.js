@@ -17,19 +17,10 @@ function getCookie(name) {
 function getAllMedecin() {
     fetch(baseUrl, {
         method: 'GET',
-        credentials: 'include',
+        // credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + getCookie("usertoken").value,
-            'Accept': '*/*', // Ajout de l'en-tête Accept
-            'Accept-Encoding': 'gzip, deflate, br, zstd', // Ajout de l'en-tête Accept-Encoding
-            'Accept-Language': 'fr-FR,fr;q=0.5', // Ajout de l'en-tête Accept-Language
-            'Origin': 'https://gestionmedicalfront.alwaysdata.net', // Ajout de l'en-tête Origin
-            'Sec-Fetch-Dest': 'empty', // Ajout de l'en-tête Sec-Fetch-Dest
-            'Sec-Fetch-Mode': 'cors', // Ajout de l'en-tête Sec-Fetch-Mode
-            'Sec-Fetch-Site': 'cross-site', // Ajout de l'en-tête Sec-Fetch-Site
-            'Sec-Gpc': '1', // Ajout de l'en-tête Sec-Gpc
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36' // Ajout de l'en-tête User-Agent
         },
     })
     .then(response => {
