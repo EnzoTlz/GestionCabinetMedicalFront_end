@@ -20,7 +20,7 @@ function getAllMedecin() {
         // credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + getCookie("usertoken").value,
+            // 'Authorization': 'Bearer ' + getCookie("usertoken").value,
         },
     })
     .then(response => {
