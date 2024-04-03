@@ -17,7 +17,6 @@ function getCookie(name) {
 function getAllMedecin() {
     fetch(baseUrl, {
         method: 'GET',
-        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + getCookie("usertoken").value
