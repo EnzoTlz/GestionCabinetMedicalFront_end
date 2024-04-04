@@ -1,5 +1,5 @@
 
-export function getCookie(name) {
+function getCookie(name) {
     const cookies = document.cookie.split(';');
     for (let i = 0; i < cookies.length; i++) {
         const cookie = cookies[i].trim();
@@ -10,4 +10,3 @@ export function getCookie(name) {
     }
     return null;
 }
-
