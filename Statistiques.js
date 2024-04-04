@@ -1,8 +1,27 @@
 const baseUrlMedecin = "https://gestionmedical.alwaysdata.net/api/stats/medecins";
 const baseUrlUsager = "https://gestionmedical.alwaysdata.net/api/stats/usagers";
 
+
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+            const value = cookie.substring(name.length + 1);
+            return { name: name, value: value };
+        }
+    }
+    return null;
+}
+
 function getAllStatsMedecin() {
-    fetch(baseUrlMedecin)
+    fetch(baseUrlMedecin , {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
+            'Content-Type': 'application/json',
+        }
+    })
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des statistique des médecins.');
@@ -35,7 +54,13 @@ function getAllStatsMedecin() {
 
 
 function getAllStatsUsager() {
-    fetch(baseUrlUsager)
+    fetch(baseUrlUsager , {
+        method: 'GET',
+        headers: {
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
+            'Content-Type': 'application/json',
+        }
+    })
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des statistiques des patients.');
