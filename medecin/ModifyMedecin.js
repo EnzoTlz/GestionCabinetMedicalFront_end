@@ -1,4 +1,7 @@
 const baseUrl = "https://gestionmedical.alwaysdata.net/api/medecins";
+
+import { getCookie } from '../cookieUtils.js';
+
 function modifyMedecin(event){
     event.preventDefault();
     var data = {
@@ -11,6 +14,7 @@ function modifyMedecin(event){
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
         },
         body: JSON.stringify(data)
     })
