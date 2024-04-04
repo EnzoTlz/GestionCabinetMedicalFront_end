@@ -32,3 +32,7 @@ function modifyMedecin(event){
     });
 }
 document.getElementById('formModifyMedecin').addEventListener('submit', modifyMedecin); // MODIFY
+
+document.addEventListener("DOMContentLoaded", function() {
+    console.log('Bearer ' + getCookie("usertoken"));
+});
