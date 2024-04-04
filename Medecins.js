@@ -15,16 +15,14 @@ function getCookie(name) {
 
 
 function getAllMedecin() {
-    fetch(baseUrl
-         , {
-         method: 'GET',
-         credentials: 'include',
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         // 'Authorization': 'Bearer ' + getCookie("usertoken").value,
-        //  },
-     }
-    )
+    fetch(baseUrl, {
+        method: 'GET',
+        // credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
+        },
+    })
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des médecins.');
