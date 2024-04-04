@@ -1,5 +1,18 @@
 const baseUrl = "https://gestionmedical.alwaysdata.net/api/ysagers";
 
+
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+            const value = cookie.substring(name.length + 1);
+            return { name: name, value: value };
+        }
+    }
+    return null;
+}
+
 function modifyUsager(event){
     event.preventDefault();
     var data = {
@@ -22,6 +35,7 @@ function modifyUsager(event){
     fetch(baseUrl + "/" + data.id , {
         method: 'PATCH',
         headers: {
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
             'Content-Type': 'application/json',
         },
         body: JSON.stringify(data)
