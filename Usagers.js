@@ -1,6 +1,17 @@
 const baseUrl = "https://gestionmedical.alwaysdata.net/api/usagers";
 const baseUrlMedecin = "https://gestionmedical.alwaysdata.net/api/medecins";
-;
+
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+            const value = cookie.substring(name.length + 1);
+            return { name: name, value: value };
+        }
+    }
+    return null;
+}
 
 
 function createUsager(event) {
@@ -36,6 +47,7 @@ function createUsager(event) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
         },
         body: JSON.stringify(data)
     })
@@ -53,7 +65,13 @@ function createUsager(event) {
 
 
 function getAllMedecin() {
-    fetch(baseUrlMedecin)
+    fetch(baseUrlMedecin , {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
+        }
+    })
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des médecins.');
@@ -84,7 +102,13 @@ function getAllMedecin() {
 
 
 function getAllUsager() {
-    fetch(baseUrl)
+    fetch(baseUrl , {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
+        }
+    })
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des médecins.');
@@ -126,7 +150,13 @@ function getAllUsager() {
 }
 
 function getUsagerById(id , value){
-    fetch(baseUrl+"/"+id )
+    fetch(baseUrl+"/"+id , {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
+        }
+    })
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
