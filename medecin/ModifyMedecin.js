@@ -22,7 +22,6 @@ function modifyMedecin(event){
     }
     fetch(baseUrl + "/" + data.id , {
         method: 'PATCH',
-        credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + getCookie("usertoken").value,
