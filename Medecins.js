@@ -5,10 +5,22 @@ import './cookieUtils.js';
 let selectedOptionModify;
 let selectedOptionDelete;
 
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+            const value = cookie.substring(name.length + 1);
+            return { name: name, value: value };
+        }
+    }
+    return null;
+}
+
+
 function getAllMedecin() {
     fetch(baseUrl, {
         method: 'GET',
-        // credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + getCookie("usertoken").value,
@@ -60,7 +72,6 @@ function getAllMedecin() {
 function getMedecinById(id , value){
     fetch(baseUrl+ "/"+id , {
         method: 'GET',
-        // credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + getCookie("usertoken").value,

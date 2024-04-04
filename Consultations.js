@@ -2,8 +2,28 @@ const baseUrl = "https://gestionmedical.alwaysdata.net/api/consultations";
 const baseUrlUsager = "https://gestionmedical.alwaysdata.net/api/usagers";
 const baseUrlMedecin = "https://gestionmedical.alwaysdata.net/api/medecins";
 
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+            const value = cookie.substring(name.length + 1);
+            return { name: name, value: value };
+        }
+    }
+    return null;
+}
+
+
 function getAllRdv() {
-    fetch(baseUrl)
+    fetch(baseUrl
+        , {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
+        },
+    })
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des consultations.');
@@ -26,7 +46,14 @@ function getAllRdv() {
 
 
 function getAllRdvByIdMedecin($Id_Medecin) {
-    fetch(baseUrl + "/" + $Id_Medecin)
+    fetch(baseUrl + "/" + $Id_Medecin
+        , {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + getCookie("usertoken").value,
+            },
+        })
     .then(response => {
         if (!response.ok) {
             getAllRdv();
@@ -121,7 +148,14 @@ function createRdvForm(rdv) {
 
 // Fonction pour récupérer les informations du médecin par ID
 function getMedecinById(id) {
-    return fetch(baseUrlMedecin + "/" + id)
+    return fetch(baseUrlMedecin + "/" + id
+        , {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + getCookie("usertoken").value,
+            },
+        })
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -143,7 +177,14 @@ function getMedecinById(id) {
 
 
 function getUsagerById(id){
-    return fetch(baseUrlUsager + "/"+id )
+    return fetch(baseUrlUsager + "/"+id 
+    , {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
+        },
+    })
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -164,7 +205,14 @@ function getUsagerById(id){
 
 
 function getAllUsager() {
-    fetch(baseUrlUsager)
+    fetch(baseUrlUsager
+        , {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
+        },
+    })
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des patients.');
@@ -198,6 +246,10 @@ function getAllUsager() {
 function DeleteConsultation($id_Consultation){
     fetch(baseUrl + "/" + $id_Consultation, {
         method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
+        },
     })
     .then(response => {
         if (!response.ok) {
@@ -227,7 +279,14 @@ function AddRdv($id, nom , prenom){
 
 
 function getAllMedecin() {
-    fetch(baseUrlMedecin)
+    fetch(baseUrlMedecin
+        , {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
+        },
+    })
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des médecins.');
