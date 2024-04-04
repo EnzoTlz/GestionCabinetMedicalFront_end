@@ -1,6 +1,6 @@
 const baseUrl = "https://gestionmedical.alwaysdata.net/api/medecins";
 //DELETE MEDECIN
-import { getCookie } from '../cookieUtils.js';
+import '../cookieUtils.js';
 
 function deleteMedecin(event){
     event.preventDefault();
