@@ -1,5 +1,17 @@
 const baseUrl = "https://gestionmedical.alwaysdata.net/api/medecins";
 
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+            const value = cookie.substring(name.length + 1);
+            return { name: name, value: value };
+        }
+    }
+    return null;
+}
+
 function modifyRdv(event){
     event.preventDefault();
     var data = {
@@ -14,6 +26,7 @@ function modifyRdv(event){
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
         },
         body: JSON.stringify(data)
     })

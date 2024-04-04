@@ -2,9 +2,26 @@
 const baseUrlMedecin = "https://gestionmedical.alwaysdata.net/api/medecins";
 const baseUrl = "https://gestionmedical.alwaysdata.net/api/consultations";
 
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+            const value = cookie.substring(name.length + 1);
+            return { name: name, value: value };
+        }
+    }
+    return null;
+}
 
 function getAllMedecin() {
-    fetch(baseUrlMedecin)
+    fetch(baseUrlMedecin , {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
+        },
+    })
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des médecins.');
@@ -58,6 +75,7 @@ function createConsultations(event,id_medecin) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
         },
         body: JSON.stringify(data)
     })
