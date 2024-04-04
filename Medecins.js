@@ -15,16 +15,14 @@ function getCookie(name) {
 
 
 function getAllMedecin() {
-    fetch(baseUrl
-        , {
+    fetch(baseUrl, {
         method: 'GET',
         // credentials: 'include',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + getCookie("usertoken").value,
         },
-    }
-    )
+    })
     .then(response => {
         if (!response.ok) {
             throw new Error('Une erreur s\'est produite lors de la récupération des médecins.');
@@ -69,7 +67,14 @@ function getAllMedecin() {
 
 // GET UN MEDECIN
 function getMedecinById(id , value){
-    fetch(baseUrl+ "/"+id )
+    fetch(baseUrl+ "/"+id , {
+        method: 'GET',
+        // credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
+        },
+    })
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -106,6 +111,7 @@ function createMedecin(event) {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
         },
         body: JSON.stringify(data)
     })
