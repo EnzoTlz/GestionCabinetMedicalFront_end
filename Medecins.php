@@ -65,7 +65,7 @@
                 </div>
             </div>
         </div>
-
+        <script src="cookieUtils.js"></script>
         <script src="Medecins.js"></script>
     </body>
 </html>
