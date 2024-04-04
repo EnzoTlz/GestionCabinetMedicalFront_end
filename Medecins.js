@@ -2,7 +2,8 @@ const baseUrl = "https://gestionmedical.alwaysdata.net/api/medecins";
 
 import './cookieUtils.js';
 
-
+let selectedOptionModify;
+let selectedOptionDelete;
 
 function getAllMedecin() {
     fetch(baseUrl, {
