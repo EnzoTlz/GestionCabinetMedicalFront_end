@@ -13,6 +13,7 @@ function deleteMedecin(event){
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + getCookie("usertoken").value,
         },
         body: JSON.stringify(data)
     })
