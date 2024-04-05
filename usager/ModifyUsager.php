@@ -50,7 +50,7 @@
     <button class="button_back">
         <a href="../Usagers.php" style="text-decoration: none;">Retour</a>
     </button>
-    <script src="modifyUsager.js"></script>
+    <script src="ModifyUsager.js"></script>
 
 </body>
 </html>
