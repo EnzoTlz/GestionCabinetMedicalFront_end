@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ma Documentation API</title>
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.10.3/swagger-ui.css"
+  >
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.10.3/swagger-ui-bundle.js"></script>
+  <link rel="stylesheet" href="style/global.css">
+</head>
+<header>
+    <div class="navBar">
+        <ul>
+            <li><a href="index.html" class="navElement">Accueil</a></li>
+            <li><a href="Usagers.php" class="navElement">Usagers</a></li>
+            <li><a href="Consultations.php" class="navElement">Consultations</a></li>
+            <li><a href="Medecins.php" class="navElement">Médecins</a></li>
+            <li><a href="Statistiques.php" class="navElement">Statistiques</a></li>
+            <li><a href="Documentation.html" class="navElement">Documentation API métiers</a></li>
+            <li><a href="DocumentationAuth.html" class="navElement">Documentation API Authentification</a></li>
+        </ul>
+    </div>
+</header>
+<body>
+  <div id="swagger-ui"></div>
+  <script>
+    window.onload = function() {
+      const ui = SwaggerUIBundle({
+        url: './docAuth.yaml',
+        dom_id: '#swagger-ui',
+        deepLinking: true,
+        presets: [
+          SwaggerUIBundle.presets.apis,
+          SwaggerUIBundle.SwaggerUIStandalonePreset
+        ],
+        layout: "BaseLayout"
+      })
+    }
+  </script>
+</body>
+</html>

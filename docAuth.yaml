@@ -1,0 +1,112 @@
+---
+openapi: 3.0.0
+info:
+  title: API d'Authentification du Cabinet Médical
+  description: API permettant l'authentification des médecins et la gestion des JWT.
+  version: 1.0.0
+servers:
+- url: https://authapigestionmedical.alwaysdata.net/authAPI
+
+paths:
+  /Index.php:
+    get:
+      tags:
+      - Authentification
+      summary: Valide le JWT d'un utilisateur
+      description: |
+        Valide le JWT envoyé par un utilisateur via cookies pour vérifier l'authentification. Retourne le JWT si valide.
+      operationId: validateUserToken
+      responses:
+        "200":
+          description: Authentification réussie.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "404":
+          description: JWT invalide ou absent.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+      security:
+      - bearerAuth: []
+    securitySchemes:
+      bearerAuth:
+        type: http
+        scheme: bearer
+        bearerFormat: JWT
+
+    post:
+      tags:
+      - Authentification
+      summary: Connexion d'un utilisateur (secrétaire)
+      description: |
+        Permet à un utilisateur (médecin) de se connecter en fournissant un login et un mot de passe. Un JWT est délivré en cas de succès.
+      operationId: loginUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Index_php_body'
+        required: true
+      responses:
+        "200":
+          description: JWT délivré avec succès.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+        "401":
+          description: Login ou mot de passe incorrect.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+components:
+  schemas:
+    inline_response_404:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Authentification échouée
+    Index_php_body:
+      required:
+      - login
+      - mdp
+      type: object
+      properties:
+        login:
+          type: string
+          description: Le login de l'utilisateur.
+          example: secretaire1
+        mdp:
+          type: string
+          description: Le mot de passe de l'utilisateur.
+          example: password1234!
+    inline_response_200_1:
+      type: object
+      properties:
+        message:
+          type: string
+          example: JWT délivré
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+    inline_response_200:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Authentification réussie
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+    inline_response_401:
+      type: object
+      properties:
+        message:
+          type: string
+          example: JWT non délivré
+

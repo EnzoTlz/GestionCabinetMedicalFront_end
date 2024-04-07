@@ -17,6 +17,8 @@
                 <li><a href="Consultations.php" class="navElement">Consultations</a></li>
                 <li><a href="Medecins.php" class="navElement">Médecins</a></li>
                 <li><a href="Statistiques.php" class="navElement">Statistiques</a></li>
+                <li><a href="Documentation.html" class="navElement">Documentation API métiers</a></li>
+                <li><a href="DocumentationAuth.html" class="navElement">Documentation API Authentification</a></li>
             </ul>
         </div>
     </header>

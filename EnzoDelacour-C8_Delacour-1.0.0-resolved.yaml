@@ -1,0 +1,1458 @@
+---
+openapi: 3.0.0
+info:
+  title: API de Gestion des Médecins
+  description: API permettant la gestion des médecins dans un système de santé.
+  version: 1.0.0
+servers:
+- url: https://gestionmedical.alwaysdata.net/api
+  description: Serveur de gestion
+paths:
+  /medecins:
+    get:
+      tags:
+      - Médecin
+      summary: Récupère la liste de tous les médecins
+      description: |
+        Renvoie une liste de tous les médecins enregistrés dans le système. L'accès à cette liste nécessite une authentification via JWT valide.
+      operationId: getAllMedecin
+      responses:
+        "200":
+          description: La liste des médecins a été récupérée.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/inline_response_200'
+              example:
+              - id: 1
+                nom: Dupont
+                prenom: Jean
+                civilite: M.
+              - id: 2
+                nom: Durand
+                prenom: Marie
+                civilite: Mme.
+        "401":
+          description: JWT non valide ou non trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "500":
+          description: Problème interne du serveur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - Médecin
+      summary: Ajoute un nouveau médecin
+      description: |
+        Crée un nouveau médecin avec les informations fournies. Nécessite un JWT valide pour l'authentification.
+      operationId: addMedecin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/medecins_body'
+        required: true
+      responses:
+        "201":
+          description: Médecin bien ajouté.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+              example:
+                message: "Succès : Médecin bien ajouté."
+        "400":
+          description: Tous les champs sont obligatoires.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+              example:
+                message: "Echec : Tous les champs sont obligatoires."
+        "401":
+          description: JWT non valide ou non trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401_1'
+              example:
+                errors:
+                - message: "Echec : JWT non valide."
+                - message: "Echec : JWT non trouvé."
+        "500":
+          description: Problème interne du serveur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+              example:
+                message: "Echec : Problème interne du serveur."
+      security:
+        - bearerAuth: []
+  /medecins/{id}:
+    get:
+      tags:
+      - Médecin
+      summary: Récupère les détails d'un médecin spécifique par son ID
+      description: |
+        Renvoie les détails d'un médecin spécifique en utilisant son ID comme paramètre de recherche. Nécessite un JWT valide pour l'accès.
+      operationId: getMedecinById
+      parameters:
+      - name: id
+        in: path
+        description: ID du médecin à récupérer
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Médecin bien trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+        "400":
+          description: Id non renseigné.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: JWT non valide ou non trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "404":
+          description: Id du médecin introuvable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        "500":
+          description: Problème interne du serveur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_1'
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - Médecin
+      summary: Supprime un médecin
+      description: |
+        Supprime un médecin identifié par son ID. La suppression est conditionnée par l'absence de rendez-vous et le fait que le médecin ne soit pas référent d'un patient. Nécessite un JWT valide pour l'authentification.
+      operationId: deleteMedecin
+      parameters:
+      - name: id
+        in: path
+        description: ID du médecin à supprimer
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Médecin bien supprimé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+        "400":
+          description: Id non renseigné.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: "JWT non valide ou non trouvé, ou suppression impossible due à des contraintes."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401_2'
+        "404":
+          description: Id du médecin introuvable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        "500":
+          description: Problème interne du serveur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_2'
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - Médecin
+      summary: Modifie un médecin spécifique
+      description: |
+        Met à jour les informations d'un médecin spécifique en utilisant son ID. Les champs `prenom`, `nom`, et `civilite` peuvent être modifiés. Nécessite un JWT valide pour l'accès.
+      operationId: modifyMedecin
+      parameters:
+      - name: id
+        in: path
+        description: ID du médecin à modifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/medecins_id_body'
+            example:
+              prenom: Jean
+              nom: Dupont
+              civilite: Dr.
+        required: true
+      responses:
+        "200":
+          description: Médecin bien modifié.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_3'
+        "400":
+          description: Id non renseigné.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: JWT non valide ou non trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "404":
+          description: Id du médecin introuvable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404'
+        "500":
+          description: Problème interne du serveur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_3'
+      security:
+      - bearerAuth: []
+  /consultations:
+    get:
+      tags:
+      - RendezVous
+      summary: Récupère la liste de tous les rendez-vous
+      description: |
+        Retourne une liste de tous les rendez-vous enregistrés dans le système. Nécessite un JWT valide pour l'accès.
+      operationId: getAllRendezVous
+      responses:
+        "200":
+          description: La liste des consultations a été récupérée.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/inline_response_200_4'
+              example:
+              - id: 1
+                id_usager: 101
+                id_medecin: 201
+                date_consult: 2024-03-21
+                heure_consult: 14:00
+                duree_consult: 30 minutes
+              - id: 2
+                id_usager: 102
+                id_medecin: 202
+                date_consult: 2024-03-22
+                heure_consult: 10:00
+                duree_consult: 1 heure
+        "401":
+          description: JWT non valide ou non trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "500":
+          description: Problème interne du serveur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_4'
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - RendezVous
+      summary: Ajoute un nouveau rendez-vous
+      description: |
+        Crée un nouveau rendez-vous avec les informations fournies, après vérification de l'existence de l'usager et du médecin, ainsi que de la non-collision avec d'autres rendez-vous. Nécessite un JWT valide pour l'accès.
+      operationId: addRendezVous
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/consultations_body'
+            example:
+              id_usager: 1
+              id_medecin: 2
+              date_consult: 21/03/2024
+              heure_consult: 14:00
+              duree_consult: 30 minutes
+        required: true
+      responses:
+        "201":
+          description: Rendez-vous bien ajouté.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201_1'
+        "400":
+          description: Tous les champs sont obligatoires ou format de date invalide.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_1'
+        "401":
+          description: JWT non valide ou non trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "404":
+          description: Id de l'usager ou du médecin introuvable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404_1'
+        "409":
+          description: Collision entre les rendez-vous.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_409'
+        "500":
+          description: Problème interne du serveur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_5'
+      security:
+      - bearerAuth: []
+  /consultations/{id}:
+    get:
+      tags:
+      - RendezVous
+      summary: Récupère les détails d'un rendez-vous spécifique
+      description: |
+        Retourne les détails d'un rendez-vous spécifique en utilisant son ID comme paramètre de recherche. Nécessite un JWT valide pour l'accès.
+      operationId: getRendezVousById
+      parameters:
+      - name: id
+        in: path
+        description: ID du rendez-vous à récupérer
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Consultation bien trouvée.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_5'
+        "400":
+          description: ID non renseignée.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_2'
+        "401":
+          description: JWT non valide ou non trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "404":
+          description: Consultation non trouvée.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404_2'
+        "500":
+          description: Problème interne du serveur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404_2'
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - RendezVous
+      summary: Supprime un rendez-vous spécifique
+      description: |
+        Supprime un rendez-vous spécifique identifié par son ID. Nécessite un JWT valide pour l'accès.
+      operationId: deleteRendezVous
+      parameters:
+      - name: id
+        in: path
+        description: ID du rendez-vous à supprimer
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Consultation bien supprimée.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_6'
+        "401":
+          description: JWT non valide ou non trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "404":
+          description: ID non renseignée ou consultation introuvable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_2'
+        "500":
+          description: Problème interne du serveur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_6'
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - RendezVous
+      summary: Modifie un rendez-vous spécifique
+      description: |
+        Met à jour les informations d'un rendez-vous spécifique en utilisant son ID. Les champs `id_usager`, `id_medecin`, `date_consult`, `heure_consult`, et `duree_consult` peuvent être modifiés. Nécessite un JWT valide pour l'accès.
+      operationId: modifyRendezVous
+      parameters:
+      - name: id
+        in: path
+        description: ID du rendez-vous à modifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/consultations_id_body'
+            example:
+              id_usager: 1
+              id_medecin: 2
+              date_consult: 21/03/2024
+              heure_consult: 14:00
+              duree_consult: 30 minutes
+        required: true
+      responses:
+        "200":
+          description: Rendez-vous bien modifié.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_7'
+        "400":
+          description: Tous les champs sont obligatoires ou ID non renseigné.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_1'
+        "401":
+          description: JWT non valide ou non trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401'
+        "404":
+          description: "Id du rendez-vous, de l'usager, ou du médecin introuvable."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_404_3'
+        "409":
+          description: Collision entre les rendez-vous.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_409'
+        "500":
+          description: Problème interne du serveur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_7'
+      security:
+      - bearerAuth: []
+  /usagers:
+    get:
+      tags:
+      - Usager
+      summary: Récupère la liste de tous les usagers
+      description: |
+        Retourne une liste de tous les usagers enregistrés dans le système. Nécessite un JWT valide pour l'accès.
+      operationId: getAllUsagers
+      responses:
+        "200":
+          description: La liste des usagers a été récupérée.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/inline_response_200_8'
+        "401":
+          description: JWT non valide ou non trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401_3'
+        "500":
+          description: Problème interne du serveur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_8'
+      security:
+      - bearerAuth: []
+    post:
+      tags:
+      - Usager
+      summary: Ajoute un nouvel usager
+      description: |
+        Crée un nouvel usager avec les informations fournies. Tous les champs sont obligatoires. Nécessite un JWT valide pour l'accès.
+      operationId: addUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/usagers_body'
+        required: true
+      responses:
+        "201":
+          description: Utilisateur bien ajouté.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201_2'
+        "400":
+          description: Tous les champs ne sont pas renseignés.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400_3'
+        "401":
+          description: JWT non valide ou non trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401_3'
+        "500":
+          description: Problème interne du serveur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_9'
+      security:
+      - bearerAuth: []
+  /usagers/{id}:
+    get:
+      tags:
+      - Usager
+      summary: Récupère les détails d'un usager spécifique
+      description: |
+        Retourne les détails d'un usager spécifique en utilisant son ID comme paramètre de recherche. Nécessite un JWT valide pour l'accès.
+      operationId: getUsagerById
+      parameters:
+      - name: id
+        in: path
+        description: ID de l'usager à récupérer
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Usager bien trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_9'
+        "400":
+          description: ID non renseigné.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: JWT non valide ou non trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401_3'
+        "500":
+          description: Usager non trouvé ou problème interne du serveur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_10'
+      security:
+      - bearerAuth: []
+    delete:
+      tags:
+      - Usager
+      summary: Supprime un usager spécifique
+      description: |
+        Supprime un usager spécifique identifié par son ID, après vérification de l'absence de rendez-vous associés à cet usager. Nécessite un JWT valide pour l'accès.
+      operationId: deleteUsager
+      parameters:
+      - name: id
+        in: path
+        description: ID de l'usager à supprimer
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Usager bien supprimé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_10'
+        "400":
+          description: ID non renseigné ou usager introuvable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: "JWT non valide ou non trouvé, ou suppression de l'usager impossible due à des consultations existantes."
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401_4'
+        "500":
+          description: Problème interne du serveur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_11'
+      security:
+      - bearerAuth: []
+    patch:
+      tags:
+      - Usager
+      summary: Modifie un usager spécifique
+      description: |
+        Met à jour les informations d'un usager spécifique en utilisant son ID. Permet de modifier des champs spécifiques tels que le nom, le prénom, la civilité, etc. Nécessite un JWT valide pour l'accès.
+      operationId: modifyUsager
+      parameters:
+      - name: id
+        in: path
+        description: ID de l'usager à modifier
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/usagers_id_body'
+        required: true
+      responses:
+        "200":
+          description: Usager bien modifié.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_11'
+        "400":
+          description: ID non renseigné ou Id de l'usager introuvable.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+        "401":
+          description: JWT non valide ou non trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401_3'
+        "500":
+          description: Problème interne du serveur ou usager non modifié.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_12'
+      security:
+      - bearerAuth: []
+  /stats/medecins:
+    get:
+      tags:
+      - Statistiques
+      summary: Statistiques sur les médecins
+      description: |
+        Renvoie des statistiques sur tous les médecins, incluant leurs noms et le total des heures de consultations.
+      operationId: getMedecinStatistics
+      responses:
+        "200":
+          description: Statistiques bien récupérées.
+          content:
+            application/json:
+              schema:
+                type: array
+                example:
+                - nomMedecin: Dr. Jean Dupont
+                  totalHeures: 150.5
+                - nomMedecin: Dr. Marie Curie
+                  totalHeures: 120.25
+                items:
+                  $ref: '#/components/schemas/inline_response_200_12'
+        "401":
+          description: JWT non valide ou non trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401_3'
+        "500":
+          description: Problème interne du serveur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_13'
+      security:
+      - bearerAuth: []
+  /stats/usagers:
+    get:
+      tags:
+      - Statistiques
+      summary: Statistiques détaillées sur les usagers
+      description: |
+        Renvoie des statistiques détaillées sur les usagers, y compris le nombre d'hommes et de femmes, ainsi que leur distribution par tranches d'âge.
+      operationId: getUsagerStatistics
+      responses:
+        "200":
+          description: Statistiques bien récupérées.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_13'
+        "401":
+          description: JWT non valide ou non trouvé.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_401_3'
+        "500":
+          description: Problème interne du serveur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500_13'
+      security:
+      - bearerAuth: []
+components:
+  schemas:
+    inline_response_401_3:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/inline_response_201'
+      example:
+        errors:
+        - message: "Echec : Jwt non valide."
+    inline_response_500_12:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Usager non modifié."
+    inline_response_401_2:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/inline_response_201'
+      example:
+        errors:
+        - message: "Echec : JWT non valide."
+        - message: "Echec : JWT non trouvé."
+        - message: "Echec : Suppression du médecin impossible il a une/des consultations."
+        - message: "Echec : Suppression du médecin impossible il est référent d'un patient."
+    inline_response_500_11:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Usager non supprimé."
+    inline_response_500_10:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : usager non trouvé."
+    inline_response_401_4:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/inline_response_201'
+      example:
+        errors:
+        - message: "Echec : JWT non valide."
+        - message: "Echec : JWT non trouvé."
+        - message: "Echec : Suppression de l'usager impossible, il a une/des consultations."
+    inline_response_500_13:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Statistiques non récupérées."
+    medecins_id_body:
+      type: object
+      properties:
+        prenom:
+          type: string
+          description: Le nouveau prénom du médecin.
+        nom:
+          type: string
+          description: Le nouveau nom du médecin.
+        civilite:
+          type: string
+          description: La nouvelle civilité du médecin.
+    inline_response_500:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : La liste des médecins n'a pas été récupérée."
+    inline_response_401_1:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/inline_response_201'
+    consultations_body:
+      required:
+      - date_consult
+      - duree_consult
+      - heure_consult
+      - id_medecin
+      - id_usager
+      type: object
+      properties:
+        id_usager:
+          type: integer
+          description: L'ID de l'usager prenant le rendez-vous.
+        id_medecin:
+          type: integer
+          description: L'ID du médecin avec lequel le rendez-vous est pris.
+        date_consult:
+          type: string
+          description: La date de la consultation.
+        heure_consult:
+          type: string
+          description: L'heure de la consultation.
+        duree_consult:
+          type: string
+          description: La durée de la consultation.
+    inline_response_200_9:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: L'ID unique de l'usager.
+        civilite:
+          type: string
+          description: La civilité de l'usager.
+        nom:
+          type: string
+          description: Le nom de famille de l'usager.
+        prenom:
+          type: string
+          description: Le prénom de l'usager.
+        adresse:
+          type: string
+          description: L'adresse de l'usager.
+        date_nais:
+          type: string
+          description: La date de naissance de l'usager.
+          format: date
+        lieu_nais:
+          type: string
+          description: Le lieu de naissance de l'usager.
+        num_secu:
+          type: string
+          description: Le numéro de sécurité sociale de l'usager.
+        id_medecin:
+          type: integer
+          description: L'ID du médecin référent de l'usager.
+        sexe:
+          type: string
+          description: Le sexe de l'usager.
+        ville:
+          type: string
+          description: La ville de résidence de l'usager.
+        code_postal:
+          type: string
+          description: Le code postal de la ville de l'usager.
+      example:
+        id: 123
+        civilite: M.
+        nom: Dupont
+        prenom: Jean
+        adresse: 123 rue de Paris
+        date_nais: 1990-01-01
+        lieu_nais: Paris
+        num_secu: "1234567890123"
+        id_medecin: 1
+        sexe: M
+        ville: Paris
+        code_postal: "75000"
+    inline_response_200_5:
+      type: object
+      properties:
+        idRdv:
+          type: integer
+          description: L'ID unique du rendez-vous.
+        id_usager:
+          type: integer
+          description: L'ID de l'usager ayant pris le rendez-vous.
+        id_medecin:
+          type: integer
+          description: L'ID du médecin avec lequel le rendez-vous est pris.
+        date_consult:
+          type: string
+          description: La date de la consultation.
+          format: date
+        heure_consult:
+          type: string
+          description: L'heure de la consultation.
+        duree_consult:
+          type: string
+          description: La durée de la consultation.
+      example:
+        idRdv: 123
+        id_usager: 101
+        id_medecin: 201
+        date_consult: 2024-03-21
+        heure_consult: 14:00
+        duree_consult: 30 minutes
+    inline_response_200_6:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Succès : Consultation bien supprimée."
+    inline_response_200_7:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Succès : Rendez-vous bien modifié."
+    inline_response_200_8:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: L'ID unique de l'usager.
+        civilite:
+          type: string
+          description: La civilité de l'usager.
+        nom:
+          type: string
+          description: Le nom de famille de l'usager.
+        prenom:
+          type: string
+          description: Le prénom de l'usager.
+        adresse:
+          type: string
+          description: L'adresse de l'usager.
+        date_nais:
+          type: string
+          description: La date de naissance de l'usager.
+          format: date
+        lieu_nais:
+          type: string
+          description: Le lieu de naissance de l'usager.
+        num_secu:
+          type: string
+          description: Le numéro de sécurité sociale de l'usager.
+        id_medecin:
+          type: integer
+          description: L'ID du médecin référent de l'usager.
+        sexe:
+          type: string
+          description: Le sexe de l'usager.
+        ville:
+          type: string
+          description: La ville de résidence de l'usager.
+        code_postal:
+          type: string
+          description: Le code postal de la ville de l'usager.
+    medecins_body:
+      required:
+      - civilite
+      - nom
+      - prenom
+      type: object
+      properties:
+        civilite:
+          type: string
+          example: Mr.
+        nom:
+          type: string
+          example: Doe
+        prenom:
+          type: string
+          example: John
+    inline_response_200_1:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: L'ID unique du médecin.
+        nom:
+          type: string
+          description: Le nom de famille du médecin.
+        prenom:
+          type: string
+          description: Le prénom du médecin.
+      example:
+        id: 123
+        nom: Dupont
+        prenom: Jean
+    inline_response_200_2:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Succès : Médecin bien supprimé."
+    inline_response_200_3:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Succès : Médecin bien modifié."
+    inline_response_200_4:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: L'ID unique du rendez-vous.
+        id_usager:
+          type: integer
+          description: L'ID de l'usager ayant pris le rendez-vous.
+        id_medecin:
+          type: integer
+          description: L'ID du médecin avec qui le rendez-vous est pris.
+        date_consult:
+          type: string
+          description: La date de la consultation.
+          format: date
+        heure_consult:
+          type: string
+          description: L'heure de la consultation.
+        duree_consult:
+          type: string
+          description: La durée de la consultation.
+    inline_response_200_11:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Succès : Usager bien modifié."
+    inline_response_400_3:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Tous les champs ne sont pas renseigné."
+    inline_response_200_10:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Succès : Usager bien supprimé."
+    inline_response_404_2:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Consultation non trouvé."
+    inline_response_200_13:
+      type: object
+      properties:
+        nb_femme:
+          type: integer
+          description: Nombre total de femmes.
+        nb_homme:
+          type: integer
+          description: Nombre total d'hommes.
+        nb_homme_moins_25_ans:
+          type: integer
+          description: Nombre d'hommes de moins de 25 ans.
+        nb_femme_moins_25_ans:
+          type: integer
+          description: Nombre de femmes de moins de 25 ans.
+        nb_homme_entre_25_et_50_ans:
+          type: integer
+          description: Nombre d'hommes entre 25 et 50 ans.
+        nb_femme_entre_25_et_50_ans:
+          type: integer
+          description: Nombre de femmes entre 25 et 50 ans.
+        nb_homme_plus_50_ans:
+          type: integer
+          description: Nombre d'hommes de plus de 50 ans.
+        nb_femme_plus_50_ans:
+          type: integer
+          description: Nombre de femmes de plus de 50 ans.
+      example:
+        nb_femme: 150
+        nb_homme: 120
+        nb_homme_moins_25_ans: 30
+        nb_femme_moins_25_ans: 45
+        nb_homme_entre_25_et_50_ans: 50
+        nb_femme_entre_25_et_50_ans: 70
+        nb_homme_plus_50_ans: 40
+        nb_femme_plus_50_ans: 35
+    inline_response_404_1:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Id de l'usager introuvable."
+    inline_response_200_12:
+      type: object
+      properties:
+        nomMedecin:
+          type: string
+          description: Le nom complet du médecin.
+        totalHeures:
+          type: number
+          description: Le total des heures de consultations attribuées au médecin.
+          format: float
+    inline_response_404_3:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Id du rendez-vous introuvable."
+    inline_response_500_9:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Utilisateur non ajoutée."
+    inline_response_500_8:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : La liste des usagers n'a pas été récupérée."
+    inline_response_500_7:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Rendez-vous non modifié."
+    inline_response_500_6:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Consultation non supprimée."
+    inline_response_500_5:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Rendez-vous non ajouté."
+    inline_response_500_4:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : La liste des consultations n'a pas été récupérée."
+    inline_response_500_3:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Médecin non modifié."
+    inline_response_500_2:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Médecin non supprimé."
+    inline_response_500_1:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Médecin non trouvé."
+    usagers_body:
+      required:
+      - adresse
+      - civilite
+      - code_postal
+      - date_nais
+      - id_medecin
+      - lieu_nais
+      - nom
+      - num_secu
+      - prenom
+      - sexe
+      - ville
+      type: object
+      properties:
+        civilite:
+          type: string
+          example: M.
+        nom:
+          type: string
+          example: Doe
+        prenom:
+          type: string
+          example: John
+        adresse:
+          type: string
+          example: 123 rue de Paris
+        date_nais:
+          type: string
+          format: date
+          example: 1990-01-01
+        lieu_nais:
+          type: string
+          example: Paris
+        num_secu:
+          type: string
+          example: "1234567890123"
+        id_medecin:
+          type: integer
+          example: 1
+        sexe:
+          type: string
+          example: M
+        ville:
+          type: string
+          example: Paris
+        code_postal:
+          type: string
+          example: "75000"
+    inline_response_201:
+      type: object
+      properties:
+        message:
+          type: string
+    inline_response_200:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: L'ID unique du médecin.
+        nom:
+          type: string
+          description: Le nom du médecin.
+        prenom:
+          type: string
+          description: Le prénom du médecin.
+        civilite:
+          type: string
+          description: La civilité du médecin.
+    inline_response_401:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/inline_response_201'
+      example:
+        errors:
+        - message: "Echec : JWT non valide."
+        - message: "Echec : JWT non trouvé."
+    inline_response_400_2:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Id non renseignée."
+    inline_response_400:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Id non renseigné."
+    inline_response_400_1:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Tous les champs sont obligatoires."
+    consultations_id_body:
+      required:
+      - date_consult
+      - duree_consult
+      - heure_consult
+      - id_medecin
+      - id_usager
+      type: object
+      properties:
+        id_usager:
+          type: integer
+          description: L'ID de l'usager prenant le rendez-vous.
+        id_medecin:
+          type: integer
+          description: L'ID du médecin avec lequel le rendez-vous est pris.
+        date_consult:
+          type: string
+          description: La nouvelle date de la consultation.
+        heure_consult:
+          type: string
+          description: La nouvelle heure de la consultation.
+        duree_consult:
+          type: string
+          description: La nouvelle durée de la consultation.
+    inline_response_404:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Id du médecin introuvable."
+    inline_response_409:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Echec : Collision entre les rendez-vous."
+    usagers_id_body:
+      type: object
+      properties:
+        civilite:
+          type: string
+        nom:
+          type: string
+        prenom:
+          type: string
+        adresse:
+          type: string
+        sexe:
+          type: string
+        code_postal:
+          type: string
+        ville:
+          type: string
+        lieu_nais:
+          type: string
+        date_nais:
+          type: string
+          format: date
+        num_secu:
+          type: string
+        medecin_referent:
+          type: integer
+      example:
+        civilite: Mme
+        nom: Dupont
+        prenom: Marie
+        adresse: 456 rue de Lyon
+        sexe: F
+        code_postal: "69000"
+        ville: Lyon
+        lieu_nais: Lyon
+        date_nais: 1985-02-20
+        num_secu: "123456789012345"
+        medecin_referent: 2
+    inline_response_201_1:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Success : Rendez-vous bien ajouté."
+    inline_response_201_2:
+      type: object
+      properties:
+        message:
+          type: string
+      example:
+        message: "Succès : Utilisateur bien ajoutée."
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
